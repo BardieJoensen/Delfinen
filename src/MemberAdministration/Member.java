@@ -12,10 +12,6 @@ public class Member {
     private boolean isActiveMember;
     private boolean isCompetitive;
 
-    //Derived attributes
-    private boolean isJunior;
-    private boolean hasPaid;
-
     //new member constructor
     public Member(int memberId, String name, LocalDate birthday, LocalDate membershipExpirationDate,
                   boolean isActiveMember, boolean isCompetitive) {
@@ -23,8 +19,8 @@ public class Member {
         this.name = name;
         this.birthday = birthday;
         this.signUpDate = LocalDate.now();
-        this.membershipExpirationDate = membershipExpirationDate;
-        this.isActiveMember = isActiveMember;
+        this.membershipExpirationDate = this.signUpDate.plusYears(1);
+        this.isActiveMember = true;
         this.isCompetitive = isCompetitive;
     }
 
@@ -72,7 +68,8 @@ public class Member {
     }
 
     public boolean hasPaid() {
-        return hasPaid;
+        LocalDate today = LocalDate.now();
+        return (today.isBefore(membershipExpirationDate));
     }
 
     public int getAge() {
@@ -90,8 +87,8 @@ public class Member {
         return isJunior;
     }
 
-    public void setMembershipExpirationDate(LocalDate membershipExpirationDate) {
-        this.membershipExpirationDate = membershipExpirationDate;
+    public void incrementMembershipExpirationDate() {
+        membershipExpirationDate = membershipExpirationDate.plusYears(1);
     }
 
     public void setActiveMember(boolean activeMember) {
