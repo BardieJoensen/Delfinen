@@ -3,7 +3,6 @@ import java.time.LocalDate;
 
 public class Member {
     private static int largestId = 0;
-
     private final int memberId;
     private String name;
     private final LocalDate birthday;
@@ -13,8 +12,7 @@ public class Member {
     private boolean isCompetitive;
 
     //new member constructor
-    public Member(int memberId, String name, LocalDate birthday, LocalDate membershipExpirationDate,
-                  boolean isActiveMember, boolean isCompetitive) {
+    public Member(String name, LocalDate birthday, boolean isCompetitive) {
         this.memberId = createMemberID();
         this.name = name;
         this.birthday = birthday;
@@ -24,7 +22,7 @@ public class Member {
         this.isCompetitive = isCompetitive;
     }
 
-
+    //Loading constructor
     public Member(int memberId, String name, LocalDate birthday,
                   LocalDate signUpDate, LocalDate membershipExpirationDate,
                   boolean isActiveMember, boolean isCompetitive) {
@@ -56,15 +54,15 @@ public class Member {
     }
 
     public LocalDate getMembershipExpirationDate() {
-        return membershipExpirationDate;
+        return this.membershipExpirationDate;
     }
 
     public boolean isActiveMember() {
-        return isActiveMember;
+        return this.isActiveMember;
     }
 
     public boolean isCompetitive() {
-        return isCompetitive;
+        return this.isCompetitive;
     }
 
     public boolean hasPaid() {
@@ -81,10 +79,6 @@ public class Member {
             age--;
         }
         return age;
-    }
-
-    public boolean isJunior() {
-        return isJunior;
     }
 
     public void incrementMembershipExpirationDate() {
