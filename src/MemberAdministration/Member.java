@@ -11,7 +11,7 @@ public class Member {
     private boolean isActiveMember;
     private boolean isCompetitive;
 
-    //new member constructor
+    //constructor for creating a new member from UI
     public Member(String name, LocalDate birthday, boolean isCompetitive) {
         this.memberId = createMemberID();
         this.name = name;
@@ -22,7 +22,7 @@ public class Member {
         this.isCompetitive = isCompetitive;
     }
 
-    //Loading constructor
+    //Constructor for creating a new member with existing data from CSV file
     public Member(int memberId, String name, LocalDate birthday,
                   LocalDate signUpDate, LocalDate membershipExpirationDate,
                   boolean isActiveMember, boolean isCompetitive) {
@@ -67,7 +67,7 @@ public class Member {
 
     public boolean hasPaid() {
         LocalDate today = LocalDate.now();
-        return (today.isBefore(membershipExpirationDate));
+        return (!today.isAfter(membershipExpirationDate));
     }
 
     public int getAge() {
@@ -96,5 +96,10 @@ public class Member {
     public int createMemberID(){
         largestId++;
         return largestId;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("");
     }
 }

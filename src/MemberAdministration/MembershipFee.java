@@ -17,11 +17,10 @@ public class MembershipFee {
         if(member.getAge() < SENIOR_AGE_THRESHOLD){
             return JUNIOR_PRICE;
         }
-        if (member.getAge() > DISCOUNT_AGE){
-            return SENIOR_PRICE * DISCOUNT;
+        if (member.getAge() >= DISCOUNT_AGE){
+            return SENIOR_PRICE * (1-DISCOUNT);
         }else{
             return SENIOR_PRICE;
         }
     }
-
 }
