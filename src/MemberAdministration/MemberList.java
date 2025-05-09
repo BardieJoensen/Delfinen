@@ -31,7 +31,7 @@ public class MemberList {
                 LocalDate birthday = convertStringToDate(attributes[2]);
                 LocalDate signUpDate = convertStringToDate(attributes[3]);
                 LocalDate membershipExpirationDate = convertStringToDate(attributes[4]);
-                boolean isActiveMember = (attributes[5].equalsIgnoreCase("active"));
+                boolean isActiveMember = (attributes[5].equalsIgnoreCase("aktiv"));
                 boolean isCompetitive = (attributes[6].equalsIgnoreCase("ja"));
 
                 Member member = new Member(memberId,name,birthday,signUpDate,membershipExpirationDate,isActiveMember,isCompetitive);
