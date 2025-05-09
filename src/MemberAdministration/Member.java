@@ -40,19 +40,19 @@ public class Member {
 
     // GETTERS OG SETTERS
     public int getMemberId() {
-        return memberId;
+        return this.memberId;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public LocalDate getBirthday() {
-        return birthday;
+        return this.birthday;
     }
 
     public LocalDate getSignUpDate() {
-        return signUpDate;
+        return this.signUpDate;
     }
 
     public LocalDate getMembershipExpirationDate() {
