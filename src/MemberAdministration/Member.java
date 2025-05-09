@@ -1,7 +1,10 @@
 package MemberAdministration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Member {
+    private static final DateTimeFormatter DATE_STR_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
+
     private static int largestId = 0;
     private final int memberId;
     private String name;
@@ -98,8 +101,26 @@ public class Member {
         return largestId;
     }
 
+    public String[] toStringArray(){
+        String[] attributes = new String[7];
+        attributes[0] = String.valueOf(memberId);
+        attributes[1] = name != null ? name : "";
+        attributes[2] = birthday != null ? birthday.format(DATE_STR_FORMATTER) : "";
+        attributes[3] = signUpDate != null ? signUpDate.format(DATE_STR_FORMATTER) : "";
+        attributes[4] = membershipExpirationDate != null ? membershipExpirationDate.format(DATE_STR_FORMATTER) : "";
+        attributes[5] = isActiveMember ? "aktiv" : "inaktiv";
+        attributes[6] = isCompetitive ? "ja" : "nej";
+        return attributes;
+    }
+
     @Override
     public String toString(){
-        return String.format("");
+        return String.format("ID: %-6s Navn: %-20s Født: %-12s Indmeldt: %-12s Udløb: %-12s Konkurrencesvømmer: %-12s",
+                String.format("%04d", memberId),
+                name,
+                birthday.format(DATE_STR_FORMATTER),
+                signUpDate.format(DATE_STR_FORMATTER),
+                membershipExpirationDate.format(DATE_STR_FORMATTER),
+                isCompetitive ? "ja" : "nej");
     }
 }
