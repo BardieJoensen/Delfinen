@@ -2,7 +2,7 @@ package MemberAdministration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Member {
+public class Member implements Comparable<Member>{
     private static final DateTimeFormatter DATE_STR_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     private static int largestId = 0;
@@ -122,5 +122,10 @@ public class Member {
                 signUpDate.format(DATE_STR_FORMATTER),
                 membershipExpirationDate.format(DATE_STR_FORMATTER),
                 isCompetitive ? "ja" : "nej");
+    }
+
+    @Override
+    public int compareTo(Member o) {
+        return Integer.compare(this.memberId,o.memberId);
     }
 }

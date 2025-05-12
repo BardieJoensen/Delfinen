@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class MemberList {
@@ -19,11 +21,13 @@ public class MemberList {
 
     public void loadMemberListFile(String path){
         File csvFile = new File(path);
+        int counter = 1;
         try (Scanner reader = new Scanner(csvFile)){
             //skip header
             reader.nextLine();
             //load members
             while(reader.hasNextLine()){
+                counter++;
                 String[] attributes = reader.nextLine().split(";");
 
                 int memberId = Integer.parseInt(attributes[0]);
@@ -39,7 +43,10 @@ public class MemberList {
             }
         }catch(FileNotFoundException e){
             throw new RuntimeException("File not found: " + path, e);
+        }catch(Exception e){
+            throw new RuntimeException("Incompatible file: error at line " + counter + " in file: " + csvFile.getAbsolutePath());
         }
+        sortMemberList();
     }
 
     public LocalDate convertStringToDate(String string){
@@ -51,6 +58,7 @@ public class MemberList {
     }
 
     public void saveMemberList(){
+        sortMemberList();
         try(PrintWriter pw = new PrintWriter(path)){
             //add header
             pw.println("memberId;name;birthday;signUpDate;membershipExpirationDate;isActiveMember;isCompetitive");
@@ -60,6 +68,7 @@ public class MemberList {
                 String line = String.join(";",attributes);
                 pw.println(line);
             }
+
         }catch (FileNotFoundException e){
             throw new RuntimeException("File not found: " + path, e);
         }
@@ -86,7 +95,12 @@ public class MemberList {
     }
 
     public Member getMember(int memberId){
-        return null;
+        int index = Collections.binarySearch(memberList, new Member(memberId, null, null, null, null, false, false), Comparator.comparing(Member::getMemberId));
+        return (index >= 0) ? memberList.get(index) : null;
+    }
+
+    private void sortMemberList(){
+        Collections.sort(memberList);
     }
 
     public void addMember(Member member){
