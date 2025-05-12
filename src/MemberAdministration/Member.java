@@ -124,7 +124,7 @@ public class Member implements Comparable<Member>{
                 isCompetitive ? "ja" : "nej");
     }
 
-    public String checkName(String name){
+    private String checkName(String name){
         while (name.length() > 20){
             String[] nameSplit = name.split(" ");
             if(nameSplit.length > 2){
