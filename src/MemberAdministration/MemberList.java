@@ -98,9 +98,11 @@ public class MemberList {
         memberList.add(member);
     }
 
-    public void removeMember(Member member){
-        memberList.remove(member);
+    public void removeMember(int memberId){
+        memberList.remove(getMember(memberId));
     }
+
+    //TO-DO: remove all members above arrears-threshold
 
     public ArrayList<Member> getMembersInArrears(Member members){
         ArrayList<Member> list = new ArrayList<>();
