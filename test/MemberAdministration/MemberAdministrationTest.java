@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,25 +13,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberAdministrationTest {
 
 
+    //should reflect amount of members in MemberList.csv
+    final int EXPECTED_AMOUNT_OF_MEMBERS_IN_FILE = 3;
+
     //member tests
 
     @Test
     @Order(1)
     void loadMembers() {
 
-        final int EXPECTED_AMOUNT_OF_MEMBERS = 3;
-
         String path = "./resources/MemberList.csv";
         MemberList memberList = new MemberList(path);
 
-        assertEquals(EXPECTED_AMOUNT_OF_MEMBERS, memberList.getMemberList().size());
+        assertEquals(EXPECTED_AMOUNT_OF_MEMBERS_IN_FILE, memberList.getMemberList().size());
     }
 
     @Test
     @Order(2)
     void idGeneration() {
 
-        final int EXPECTED_ID = 4;
+        final int EXPECTED_ID = EXPECTED_AMOUNT_OF_MEMBERS_IN_FILE + 1;
+
         String path = "./resources/MemberList.csv";
         MemberList memberList = new MemberList(path);
 
@@ -46,7 +47,7 @@ class MemberAdministrationTest {
     @Order(3)
     void idGenerationWithExistingMemberList() {
 
-        final int EXPECTED_ID = 5;
+        final int EXPECTED_ID = EXPECTED_AMOUNT_OF_MEMBERS_IN_FILE + 2;
 
         LocalDate birthday = LocalDate.of(1969,8,14);
         Member member = new Member("Jørgen Mikkelsen", birthday, true);
