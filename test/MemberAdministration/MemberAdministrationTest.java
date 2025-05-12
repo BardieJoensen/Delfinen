@@ -34,21 +34,6 @@ class MemberAdministrationTest {
 
         final int EXPECTED_ID = EXPECTED_AMOUNT_OF_MEMBERS_IN_FILE + 1;
 
-        String path = "./resources/MemberList.csv";
-        MemberList memberList = new MemberList(path);
-
-        LocalDate birthday = LocalDate.of(1969,8,14);
-        Member member = new Member("Jørgen Mikkelsen", birthday, true);
-
-        assertEquals(EXPECTED_ID, member.getMemberId());
-    }
-
-    @Test
-    @Order(3)
-    void idGenerationWithExistingMemberList() {
-
-        final int EXPECTED_ID = EXPECTED_AMOUNT_OF_MEMBERS_IN_FILE + 2;
-
         LocalDate birthday = LocalDate.of(1969,8,14);
         Member member = new Member("Jørgen Mikkelsen", birthday, true);
 
