@@ -19,7 +19,7 @@ public class MemberList {
         loadMemberListFile(path);
     }
 
-    public void loadMemberListFile(String path){
+    private void loadMemberListFile(String path){
         File csvFile = new File(path);
         int counter = 1;
         try (Scanner reader = new Scanner(csvFile)){
@@ -29,7 +29,6 @@ public class MemberList {
             while(reader.hasNextLine()){
                 counter++;
                 String[] attributes = reader.nextLine().split(";");
-
                 int memberId = Integer.parseInt(attributes[0]);
                 String name = attributes[1];
                 LocalDate birthday = convertStringToDate(attributes[2]);
@@ -74,14 +73,6 @@ public class MemberList {
         }
     }
 
-    public ArrayList<Member> showMembersInArray(){
-        return null;
-    }
-
-    public ArrayList<Member> showMembers(){
-        return null;
-    }
-
     public double calculateExpectedPayments(){
         double expectedPayment = 0.0;
         for(Member m : memberList){
@@ -91,7 +82,7 @@ public class MemberList {
     }
 
     public ArrayList<Member> getMemberList() {
-        return memberList;
+        return  new ArrayList<Member>(memberList);
     }
 
     public Member getMember(int memberId){
@@ -111,13 +102,13 @@ public class MemberList {
         memberList.remove(member);
     }
 
-    public void showMembersInArrears(Member members){
+    public ArrayList<Member> getMembersInArrears(Member members){
+        ArrayList<Member> list = new ArrayList<>();
         for(Member m : memberList){
             if (!m.hasPaid()){
-                System.out.println("Disse medlemmer har ikke betalt:");
-                System.out.println(m);
+                list.add(m);
             }
         }
-
+        return list;
     }
 }
