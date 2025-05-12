@@ -48,7 +48,7 @@ public class MemberList {
         sortMemberList();
     }
 
-    public LocalDate convertStringToDate(String string){
+    private LocalDate convertStringToDate(String string){
         String[] arr = string.split("\\.");
         int day = Integer.parseInt(arr[0]);
         int month = Integer.parseInt(arr[1]);

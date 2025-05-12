@@ -115,13 +115,25 @@ public class Member implements Comparable<Member>{
 
     @Override
     public String toString(){
-        return String.format("ID: %-6s Navn: %-20s Født: %-12s Indmeldt: %-12s Udløb: %-12s Konkurrencesvømmer: %-12s",
+        return String.format("ID: %-6s Navn: %-20s Født: %10s   Indmeldt: %10s   Udløb: %10s   Konkurrencesvømmer: %-12s",
                 String.format("%04d", memberId),
-                name,
+                checkName(name),
                 birthday.format(DATE_STR_FORMATTER),
                 signUpDate.format(DATE_STR_FORMATTER),
                 membershipExpirationDate.format(DATE_STR_FORMATTER),
                 isCompetitive ? "ja" : "nej");
+    }
+
+    public String checkName(String name){
+        while (name.length() > 20){
+            String[] nameSplit = name.split(" ");
+            if(nameSplit.length > 2){
+                name = nameSplit[0] + " " + nameSplit[nameSplit.length-1];
+            }else{
+                name = name.substring(0,20);
+            }
+        }
+        return name;
     }
 
     @Override
