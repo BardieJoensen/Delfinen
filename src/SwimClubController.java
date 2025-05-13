@@ -148,13 +148,11 @@ public class SwimClubController {
         }
     }
     public void totalIncome(){
-        double total = 0.0;
-
-        for(Member member : memberList.getMemberList()) {
-            double fee = MembershipFee.calculatePayment(member);
-            total += fee;
-
-        }
+        StringBuilder message = new StringBuilder();
+        message.append("Den samlede forventede indkomst er: ");
+        message.append(memberList.calculateExpectedPayments());
+        message.append(" kr. per år.");
+        ui.showMessage(message.toString());
     }
     public void registerPayment(){
         //search memberID? getMemberID?

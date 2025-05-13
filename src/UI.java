@@ -53,7 +53,7 @@ public class UI {
 
     public void printEconomyMenu(){
         System.out.println("""
-                1. Se indkomst
+                1. Se forventet indkomst
                 2. Registrer betaling
                 3. Se restance liste
                 4. Tilbage til hovedmenu""");
