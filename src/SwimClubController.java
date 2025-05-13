@@ -70,7 +70,9 @@ public class SwimClubController {
     public void searchForMember(){
         String search = ui.getInputString("Indtast søgning:");
         ArrayList<Member> searchResults = memberList.searchForMember(search);
-        searchResults.forEach(System.out::println);
+
+        ui.showMessage("Søgeresultat:");
+        searchResults.forEach(m -> ui.showMessage(m.toString()));
 
         if(searchResults.size() == 1){
             editMember(searchResults.get(0));
