@@ -22,7 +22,7 @@ class MemberAdministrationTest {
     @Order(1)
     void loadMembers() {
 
-        String path = "./resources/MemberList.csv";
+        String path = "./resources/TestMemberList.csv";
         MemberList memberList = new MemberList(path);
 
         assertEquals(EXPECTED_AMOUNT_OF_MEMBERS_IN_FILE, memberList.getMemberList().size());
