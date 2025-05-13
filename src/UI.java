@@ -1,26 +1,25 @@
-import MemberAdministration.Member;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
     private final Scanner scanner = new Scanner(System.in);
 
-    public void printMainMenu(){
-        System.out.println("""
-                1. Medlemsadministration
-                2. Økonomi
-                3. Konkurrencesvømning
-                4. Afslut""");
+    public void printMainMenu() {
+        for (MainMenuOption option : MainMenuOption.values()) {
+            System.out.println(option.getValue() + ". " + option.getDisplayText());
+        }
     }
 
-    public void printMemberAdministrationMenu(){
-        System.out.println("""
-                1. Registrer medlem
-                2. Søg efter medlem
-                3. Se medlemsliste
-                4. Tilbage til hovedmenu""");
+    public void printMemberAdministrationMenu() {
+        for (AdminMenuOption option : AdminMenuOption.values()) {
+            System.out.println(option.getValue() + ". " + option.getDisplayText());
+        }
+    }
+
+    public void printEconomyMenu() {
+        for (EconomyMenuOption option : EconomyMenuOption.values()) {
+            System.out.println(option.getValue() + ". " + option.getDisplayText());
+        }
     }
 
     public void printMoreRegistrationOption(){
@@ -51,22 +50,12 @@ public class UI {
                         4. Tilbage til medlemsadministration""");
     }
 
-    public void printEconomyMenu(){
-        System.out.println("""
-                1. Se forventet indkomst
-                2. Registrer betaling
-                3. Se restance liste
-                4. Tilbage til hovedmenu""");
-    }
-
     public void printArrearsMenu(){
         System.out.println("""
                 1. Udmeld alle medlemmer i restance (3-4 måneder uden betaling)
                 2. Tilbage til økonomimenu""");
     }
 
-
-    //TO-DO konkurrencesvømningsmenu
     public void showMessage(String message) {
         System.out.println(message);
     }
@@ -76,15 +65,27 @@ public class UI {
         return scanner.nextLine();
     }
 
-    public String getInputNumber(int amountOptions) {
+    public MainMenuOption getMainMenuInput() {
+        int userInt = getInputNumberValue(MainMenuOption.values().length);
+        return MainMenuOption.fromValue(userInt);
+    }
 
+    public AdminMenuOption getAdminMenuInput() {
+        int userInt = getInputNumberValue(AdminMenuOption.values().length);
+        return AdminMenuOption.fromValue(userInt);
+    }
+
+    public EconomyMenuOption getEconomyMenuInput() {
+        int userInt = getInputNumberValue(EconomyMenuOption.values().length);
+        return EconomyMenuOption.fromValue(userInt);
+    }
+
+    // Helper method to get numeric input
+    private int getInputNumberValue(int amountOptions) {
+        System.out.println("Indtast valg: ");
         int userInt;
 
-        System.out.println("Indtast valg: ");
-
         while(true) {
-
-            //check if input is valid number
             try {
                 userInt = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
@@ -92,13 +93,18 @@ public class UI {
                 continue;
             }
 
-            //check if input is within bounds
             if (userInt > amountOptions || userInt <= 0) {
                 System.out.println("Indtast venligst et tal mellem 1 og " + amountOptions);
                 continue;
             }
             break;
         }
+        return userInt;
+    }
+
+    // Keep this method for backward compatibility
+    public String getInputNumber(int amountOptions) {
+        int userInt = getInputNumberValue(amountOptions);
         return String.valueOf(userInt);
     }
 
@@ -121,6 +127,4 @@ public class UI {
 
         return date;
     }
-
-
 }

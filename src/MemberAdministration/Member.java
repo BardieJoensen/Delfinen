@@ -1,4 +1,5 @@
 package MemberAdministration;
+import Utilities.DateUtil;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -87,14 +88,7 @@ public class Member implements Comparable<Member>{
     }
 
     public int getAge() {
-        LocalDate today = LocalDate.now();
-        int age = today.getYear() - birthday.getYear();
-
-        if(today.getMonthValue() < birthday.getMonthValue() ||
-           (today.getMonthValue() == birthday.getMonthValue() && today.getDayOfMonth() < birthday.getDayOfMonth())){
-            age--;
-        }
-        return age;
+        return DateUtil.calculateAge(birthday);
     }
 
     public void incrementMembershipExpirationDate() {
@@ -118,9 +112,9 @@ public class Member implements Comparable<Member>{
         String[] attributes = new String[7];
         attributes[0] = String.valueOf(memberId);
         attributes[1] = name != null ? name : "";
-        attributes[2] = birthday != null ? birthday.format(DATE_STR_FORMATTER) : "";
-        attributes[3] = signUpDate != null ? signUpDate.format(DATE_STR_FORMATTER) : "";
-        attributes[4] = membershipExpirationDate != null ? membershipExpirationDate.format(DATE_STR_FORMATTER) : "";
+        attributes[2] = birthday != null ? DateUtil.formatDate(birthday) : "";
+        attributes[3] = signUpDate != null ? DateUtil.formatDate(signUpDate) : "";
+        attributes[4] = membershipExpirationDate != null ? DateUtil.formatDate(membershipExpirationDate) : "";
         attributes[5] = isActiveMember ? "aktiv" : "inaktiv";
         attributes[6] = isCompetitive ? "ja" : "nej";
         return attributes;

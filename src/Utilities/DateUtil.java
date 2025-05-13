@@ -1,0 +1,53 @@
+package Utilities;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class DateUtil {
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
+
+    /**
+     * Converts a date string in format dd.MM.yyyy to LocalDate
+     * @param dateStr Date string to convert
+     * @return Parsed LocalDate
+     * @throws DateTimeParseException if the format is invalid
+     */
+    public static LocalDate parseDate(String dateStr) throws DateTimeParseException {
+        try {
+            String[] parts = dateStr.split("\\.");
+            int day = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int year = Integer.parseInt(parts[2]);
+            return LocalDate.of(year, month, day);
+        } catch (Exception e) {
+            throw new DateTimeParseException("Invalid date format: " + dateStr, dateStr, 0);
+        }
+    }
+
+    /**
+     * Formats a LocalDate to string in format dd.MM.yyyy
+     * @param date Date to format
+     * @return Formatted string or empty string if date is null
+     */
+    public static String formatDate(LocalDate date) {
+        return date != null ? date.format(DATE_FORMATTER) : "";
+    }
+
+    /**
+     * Calculates age from birthday to current date
+     * @param birthday The birth date
+     * @return The calculated age in years
+     */
+    public static int calculateAge(LocalDate birthday) {
+        LocalDate today = LocalDate.now();
+        int age = today.getYear() - birthday.getYear();
+
+        // Check if birthday has occurred this year
+        if (today.getMonthValue() < birthday.getMonthValue() ||
+                (today.getMonthValue() == birthday.getMonthValue() && today.getDayOfMonth() < birthday.getDayOfMonth())) {
+            age--;
+        }
+        return age;
+    }
+}

@@ -1,26 +1,27 @@
 package MemberAdministration;
 
 public class MembershipFee {
+    // Keep these constants public so they can be used by MembershipType
+    public static final double DISCOUNT = 0.25;
+    public static final int DISCOUNT_AGE = 60;
+    public static final int SENIOR_AGE_THRESHOLD = 18;
 
-    private static final double DISCOUNT = 0.25;
-    private static final int DISCOUNT_AGE = 60;
-    private static final double JUNIOR_PRICE = 1000.00;
-    private static final int SENIOR_AGE_THRESHOLD = 18;
-    private static final double SENIOR_PRICE = 1600.00;
-    private static final double PASSIVE_PRICE = 500.00;
+    /**
+     * Calculates the membership fee for a given member
+     * @param member The member to calculate fee for
+     * @return The annual fee amount
+     */
+    public static double calculatePayment(Member member) {
+        MembershipType type = MembershipType.forMember(member);
+        return type.getAnnualFee();
+    }
 
-
-    public static double calculatePayment(Member member){
-        if(!member.isActiveMember()){
-            return PASSIVE_PRICE;
-        }
-        if(member.getAge() < SENIOR_AGE_THRESHOLD){
-            return JUNIOR_PRICE;
-        }
-        if (member.getAge() >= DISCOUNT_AGE){
-            return SENIOR_PRICE * (1-DISCOUNT);
-        }else{
-            return SENIOR_PRICE;
-        }
+    /**
+     * Gets the membership type for a member
+     * @param member The member to evaluate
+     * @return The membership type
+     */
+    public static MembershipType getMembershipType(Member member) {
+        return MembershipType.forMember(member);
     }
 }

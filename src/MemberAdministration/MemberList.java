@@ -1,5 +1,7 @@
 package MemberAdministration;
 
+import Utilities.DateUtil;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -48,12 +50,8 @@ public class MemberList {
         sortMemberList();
     }
 
-    private LocalDate convertStringToDate(String string){
-        String[] arr = string.split("\\.");
-        int day = Integer.parseInt(arr[0]);
-        int month = Integer.parseInt(arr[1]);
-        int year = Integer.parseInt(arr[2]);
-        return LocalDate.of(year,month,day);
+    private LocalDate convertStringToDate(String string) {
+        return DateUtil.parseDate(string);
     }
 
     public void saveMemberList(){
@@ -127,7 +125,7 @@ public class MemberList {
 
     //TO-DO: remove all members above arrears-threshold
 
-    public ArrayList<Member> getMembersInArrears(Member members){
+    public ArrayList<Member> getMembersInArrears(){
         ArrayList<Member> list = new ArrayList<>();
         for(Member m : memberList){
             if (!m.hasPaid()){
