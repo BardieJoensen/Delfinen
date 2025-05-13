@@ -6,15 +6,17 @@ public class Member implements Comparable<Member>{
     private static final DateTimeFormatter DATE_STR_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     private static int largestId = 0;
+
     private final int memberId;
+
     private String name;
     private final LocalDate birthday;
     private final LocalDate signUpDate;
     private LocalDate membershipExpirationDate;
     private boolean isActiveMember;
     private boolean isCompetitive;
-
     //constructor for creating a new member from UI
+
     public Member(String name, LocalDate birthday, boolean isCompetitive) {
         this.memberId = createMemberID();
         this.name = name;
@@ -24,8 +26,8 @@ public class Member implements Comparable<Member>{
         this.isActiveMember = true;
         this.isCompetitive = isCompetitive;
     }
-
     //Constructor for creating a new member with existing data from CSV file
+
     public Member(int memberId, String name, LocalDate birthday,
                   LocalDate signUpDate, LocalDate membershipExpirationDate,
                   boolean isActiveMember, boolean isCompetitive) {
@@ -38,8 +40,11 @@ public class Member implements Comparable<Member>{
         this.isCompetitive = isCompetitive;
         largestId = Math.max(memberId, largestId);
     }
-
     // GETTERS OG SETTERS
+
+    public static int getLargestId() {
+        return largestId;
+    }
     public int getMemberId() {
         return this.memberId;
     }
@@ -64,8 +69,16 @@ public class Member implements Comparable<Member>{
         return this.isActiveMember;
     }
 
+    public String isActiveMemberAsString(){
+        return (isActiveMember) ? "aktiv" : "inaktiv";
+    }
+
     public boolean isCompetitive() {
         return this.isCompetitive;
+    }
+
+    public String isCompetitiveAsString(){
+        return (isCompetitive) ? "ja" : "nej";
     }
 
     public boolean hasPaid() {

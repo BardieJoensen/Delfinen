@@ -90,6 +90,29 @@ public class MemberList {
         return (index >= 0) ? memberList.get(index) : null;
     }
 
+    public ArrayList<Member> searchForMember(String string){
+        ArrayList<Member> searchResults = new ArrayList<>();
+        try{
+            int memberId = Integer.parseInt(string);
+            Member member = getMember(memberId);
+            if(member == null) throw new NumberFormatException();
+            searchResults.add(member);
+        }catch (NumberFormatException e){
+            String[] searchWords = string.split(" ");
+            for(Member m : memberList){
+                for(String s : searchWords){
+                    if(m.getName().toLowerCase().contains(s.toLowerCase())) {
+                        searchResults.add(m);
+                    }
+                    if(String.valueOf(m.getMemberId()).contains(s)){
+                        searchResults.add(m);
+                    }
+                }
+            }
+        }
+        return searchResults;
+    }
+
     private void sortMemberList(){
         Collections.sort(memberList);
     }

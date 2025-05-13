@@ -1,4 +1,7 @@
+import MemberAdministration.Member;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
@@ -20,12 +23,24 @@ public class UI {
                 4. Tilbage til hovedmenu""");
     }
 
+    public void printMoreRegistrationOption(){
+        System.out.println("""
+                1. Registrer flere medlemmer
+                2. Tilbage til medlemsadministration""");
+    }
+
     public void printEditMember(){
         System.out.println("""
-                1. Konkurrencestatus
-                2. Medlemskabsstatus
+                1. Skift Konkurrencestatus
+                2. Skift aktivitetsstatus
                 3. Udmeld medlem
                 4. Tilbage til medlemsadministration""");
+    }
+
+    public void printPickMemberOption(){
+        System.out.println("""
+                1. vælg medlem
+                2. tilbage til medlemsadministration""");
     }
 
     public void printEconomyMenu(){
@@ -42,11 +57,6 @@ public class UI {
                 2. Tilbage til økonomimenu""");
     }
 
-    public void printMoreRegistration(){
-        System.out.println("""
-                1. Registrer flere medlemmer
-                2. Tilbage til medlemsadministration""");
-    }
 
     //TO-DO konkurrencesvømningsmenu
 
@@ -81,8 +91,8 @@ public class UI {
         return String.valueOf(userInt);
     }
 
-    public LocalDate getInputDate(){
-        System.out.println("Indtast dato: [dd.mm.åååå]");
+    public LocalDate getInputDate(String prompt){
+        System.out.println(prompt);
         LocalDate date;
         while(true){
             try{
@@ -100,4 +110,14 @@ public class UI {
 
         return date;
     }
+
+    public void printMemberOverviewMenu(){
+        System.out.println("""
+                        1. Næste side
+                        2. Forrige side
+                        3. Vælg medlem
+                        4. Tilbage til medlemsadministration""");
+    }
+
+
 }
