@@ -4,11 +4,10 @@ import MemberAdministration.MembershipFee;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class SwimClubController {
     private final UI ui = new UI();
-    private final MemberList memberList = new MemberList("./resources/TestMemberList.csv");
+    private final MemberList memberList = new MemberList("./resources/MemberList.csv");
     private String input;
     private String displayContext;
 
@@ -135,13 +134,15 @@ public class SwimClubController {
     }
 
     public void economy(){
-        ui.printEconomyMenu();
-        input = ui.getInputNumber(4);
-        switch (input){
-            case("1") -> totalIncome();
-            case("2") -> registerPayment();
-            case("3") -> arrearsList();
-            case("4") -> {return;}
+        while(true){
+            ui.printEconomyMenu();
+            input = ui.getInputNumber(4);
+            switch (input){
+                case("1") -> totalIncome();
+                case("2") -> registerPayment();
+                case("3") -> arrearsList();
+                case("4") -> {return;}
+            }
         }
     }
     public void totalIncome(){
