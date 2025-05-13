@@ -20,7 +20,7 @@ public class UI {
                 4. Tilbage til hovedmenu""");
     }
 
-    public void editMember(){
+    public void printEditMember(){
         System.out.println("""
                 1. Konkurrencestatus
                 2. Medlemskabsstatus
@@ -45,13 +45,13 @@ public class UI {
     public void printMoreRegistration(){
         System.out.println("""
                 1. Registrer flere medlemmer
-                2. Tilbage til medlemsadministrationsmenu""");
+                2. Tilbage til medlemsadministration""");
     }
 
     //TO-DO konkurrencesvømningsmenu
 
-    public String getInputString(){
-        System.out.println("Indtast tekst: ");
+    public String getInputString(String prompt){
+        System.out.println(prompt);
         return scanner.nextLine();
     }
 
@@ -59,10 +59,10 @@ public class UI {
 
         int userInt;
 
-        System.out.println("Indtast nummer: ");
+        System.out.println("Indtast valg: ");
 
         while(true) {
-            
+
             //check if input is valid number
             try {
                 userInt = Integer.parseInt(scanner.nextLine());
