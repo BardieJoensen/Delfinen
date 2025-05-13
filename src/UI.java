@@ -43,6 +43,14 @@ public class UI {
                 2. tilbage til medlemsadministration""");
     }
 
+    public void printMemberOverviewMenu(){
+        System.out.println("""
+                        1. Næste side
+                        2. Forrige side
+                        3. Vælg medlem
+                        4. Tilbage til medlemsadministration""");
+    }
+
     public void printEconomyMenu(){
         System.out.println("""
                 1. Se indkomst
@@ -59,6 +67,9 @@ public class UI {
 
 
     //TO-DO konkurrencesvømningsmenu
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
 
     public String getInputString(String prompt){
         System.out.println(prompt);
@@ -109,14 +120,6 @@ public class UI {
         }
 
         return date;
-    }
-
-    public void printMemberOverviewMenu(){
-        System.out.println("""
-                        1. Næste side
-                        2. Forrige side
-                        3. Vælg medlem
-                        4. Tilbage til medlemsadministration""");
     }
 
 

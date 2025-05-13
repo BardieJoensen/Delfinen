@@ -32,7 +32,7 @@ public class SwimClubController {
                 }
                 case("3") -> {
                     displayContext = "Competition";
-                    System.out.println("404 not found");
+                    ui.showMessage("404 not found");
                 }
                 case("4") ->{return;}
             }
@@ -71,6 +71,7 @@ public class SwimClubController {
         String search = ui.getInputString("Indtast søgning:");
         ArrayList<Member> searchResults = memberList.searchForMember(search);
         searchResults.forEach(System.out::println);
+
         if(searchResults.size() == 1){
             editMember(searchResults.get(0));
         }else{
@@ -86,7 +87,8 @@ public class SwimClubController {
 
     public void seeMembers(){
         for(int i = 0; i < memberList.getMemberList().size(); i++){
-            System.out.println(memberList.getMemberList().get(i));
+            ui.showMessage(memberList.getMemberList().get(i).toString());
+
             if((i+1)%10 == 0 || i == memberList.getMemberList().size()-1){
                 ui.printMemberOverviewMenu();
                 input = ui.getInputNumber(3);
@@ -108,7 +110,7 @@ public class SwimClubController {
     }
 
     public void editMember(Member member){
-        System.out.println("Redigerer: " + member.getMemberId() + " "
+        ui.showMessage("Redigerer: " + member.getMemberId() + " "
                                          + member.getName() + " "
                                          + member.isActiveMember() + " "
                                          + member.isCompetitive());
@@ -117,17 +119,17 @@ public class SwimClubController {
         switch (input){
             case("1") -> {
                 member.setCompetitive(!member.isCompetitive());
-                System.out.println("Konkurrencestatus for " + member.getName() + " er nu: " + member.isCompetitiveAsString());
+                ui.showMessage("Konkurrencestatus for " + member.getName() + " er nu: " + member.isCompetitiveAsString());
                 editMember(member);
             }
             case("2") -> {
                 member.setActiveMember(!member.isActiveMember());
-                System.out.println("Aktivitetsstatus for " + member.getName() + " er nu: " + member.isActiveMemberAsString());
+                ui.showMessage("Aktivitetsstatus for " + member.getName() + " er nu: " + member.isActiveMemberAsString());
                 editMember(member);
             }
             case("3") -> {
                 memberList.removeMember(member.getMemberId());
-                System.out.println("Fjernet " + member.getName() + " fra listen");
+                ui.showMessage("Fjernet " + member.getName() + " fra listen");
             }
             case("4") -> {return;}
         }
@@ -165,8 +167,8 @@ public class SwimClubController {
         for (Member member : memberList.getMemberList())
             if (!member.hasPaid()) {
                 double fee = MembershipFee.calculatePayment(member);
-                System.out.println(member.getName() + "ID: " + member.getMemberId() + ")");
-                System.out.println("Udstående betaling: " + fee + " DKK");
+                ui.showMessage(member.getName() + "ID: " + member.getMemberId() + ")");
+                ui.showMessage("Udstående betaling: " + fee + " DKK");
                 totalArrears += fee;
                 count++;
 
