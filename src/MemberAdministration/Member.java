@@ -130,7 +130,8 @@ public class Member implements Comparable<Member>{
             if(nameSplit.length > 2){
                 name = nameSplit[0] + " " + nameSplit[nameSplit.length-1];
             }else{
-                name = name.substring(0,20);
+                name = nameSplit[0].charAt(0)+". " + nameSplit[nameSplit.length-1];
+                if (name.length() > 20) name = name.substring(0,20);
             }
         }
         return name;
