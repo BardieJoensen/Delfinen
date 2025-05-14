@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 public class SwimClubController {
     private final UI ui = new UI();
-    private final MemberList memberList = new MemberList("./resources/TestMemberList.csv");
+    private final MemberList memberList = new MemberList("./resources/MemberList.csv");
     private String input;
     private String displayContext;
 
