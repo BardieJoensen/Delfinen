@@ -1,5 +1,7 @@
 package MemberAdministration;
 
+import Utilities.DateUtil;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -31,10 +33,10 @@ public class MemberList {
                 String[] attributes = reader.nextLine().split(";");
                 int memberId = Integer.parseInt(attributes[0]);
                 String name = attributes[1];
-                LocalDate birthday = convertStringToDate(attributes[2]);
-                LocalDate signUpDate = convertStringToDate(attributes[3]);
-                LocalDate membershipExpirationDate = convertStringToDate(attributes[4]);
-                boolean isActiveMember = (attributes[5].equalsIgnoreCase("active"));
+                LocalDate birthday = DateUtil.parseDate(attributes[2]);
+                LocalDate signUpDate = DateUtil.parseDate(attributes[3]);
+                LocalDate membershipExpirationDate = DateUtil.parseDate(attributes[4]);
+                boolean isActiveMember = (attributes[5].equalsIgnoreCase("aktiv"));
                 boolean isCompetitive = (attributes[6].equalsIgnoreCase("ja"));
 
                 Member member = new Member(memberId,name,birthday,signUpDate,membershipExpirationDate,isActiveMember,isCompetitive);
@@ -46,14 +48,6 @@ public class MemberList {
             throw new RuntimeException("Incompatible file: error at line " + counter + " in file: " + csvFile.getAbsolutePath());
         }
         sortMemberList();
-    }
-
-    private LocalDate convertStringToDate(String string){
-        String[] arr = string.split("\\.");
-        int day = Integer.parseInt(arr[0]);
-        int month = Integer.parseInt(arr[1]);
-        int year = Integer.parseInt(arr[2]);
-        return LocalDate.of(year,month,day);
     }
 
     public void saveMemberList(){
@@ -124,8 +118,6 @@ public class MemberList {
     public void removeMember(int memberId){
         memberList.remove(getMember(memberId));
     }
-
-    //TO-DO: remove all members above arrears-threshold
 
     public ArrayList<Member> getMembersInArrears(){
         ArrayList<Member> list = new ArrayList<>();

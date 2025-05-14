@@ -1,10 +1,8 @@
 package MemberAdministration;
+import Utilities.DateUtil;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Member implements Comparable<Member>{
-    public static final DateTimeFormatter DATE_STR_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
-
     private static int largestId = 0;
 
     private final int memberId;
@@ -87,14 +85,7 @@ public class Member implements Comparable<Member>{
     }
 
     public int getAge() {
-        LocalDate today = LocalDate.now();
-        int age = today.getYear() - birthday.getYear();
-
-        if(today.getMonthValue() < birthday.getMonthValue() ||
-           (today.getMonthValue() == birthday.getMonthValue() && today.getDayOfMonth() < birthday.getDayOfMonth())){
-            age--;
-        }
-        return age;
+        return DateUtil.calculateAge(birthday);
     }
 
     public void incrementMembershipExpirationDate() {
@@ -118,9 +109,9 @@ public class Member implements Comparable<Member>{
         String[] attributes = new String[7];
         attributes[0] = String.valueOf(memberId);
         attributes[1] = name != null ? name : "";
-        attributes[2] = birthday != null ? birthday.format(DATE_STR_FORMATTER) : "";
-        attributes[3] = signUpDate != null ? signUpDate.format(DATE_STR_FORMATTER) : "";
-        attributes[4] = membershipExpirationDate != null ? membershipExpirationDate.format(DATE_STR_FORMATTER) : "";
+        attributes[2] = birthday != null ? birthday.format(DateUtil.DATE_FORMATTER) : "";
+        attributes[3] = signUpDate != null ? signUpDate.format(DateUtil.DATE_FORMATTER) : "";
+        attributes[4] = membershipExpirationDate != null ? membershipExpirationDate.format(DateUtil.DATE_FORMATTER) : "";
         attributes[5] = isActiveMember ? "aktiv" : "inaktiv";
         attributes[6] = isCompetitive ? "ja" : "nej";
         return attributes;
@@ -128,12 +119,12 @@ public class Member implements Comparable<Member>{
 
     @Override
     public String toString(){
-        return String.format("ID: %-6s Navn: %-20s Født: %10s   Indmeldt: %10s   Udløb: %10s   Konkurrencesvømmer: %-12s",
+        return String.format("ID: %-6s Navn: %-20s Født: %10s   Indmeldt: %10s   Udløber: %10s   Konkurrencesvømmer: %-12s",
                 String.format("%04d", memberId),
                 formatName(name),
-                birthday.format(DATE_STR_FORMATTER),
-                signUpDate.format(DATE_STR_FORMATTER),
-                membershipExpirationDate.format(DATE_STR_FORMATTER),
+                birthday.format(DateUtil.DATE_FORMATTER),
+                signUpDate.format(DateUtil.DATE_FORMATTER),
+                membershipExpirationDate.format(DateUtil.DATE_FORMATTER),
                 isCompetitive ? "ja" : "nej");
     }
 

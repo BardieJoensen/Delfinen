@@ -1,5 +1,13 @@
 memberId;name;birthday;signUpDate;membershipExpirationDate;isActiveMember;isCompetitive
+1;Donald Duck;5.6.1930;9.5.2024;9.5.2026;aktiv;ja
 2;Lasse Testdummy Vogelsang;1.1.1970;1.1.2025;1.1.2026;inaktiv;ja
-1;Donald Duck;5.6.1930;9.5.2024;9.5.2025;aktiv;ja
 3;Blastoise;5.11.1996;12.5.2025;12.5.2026;aktiv;ja
 4;Jens Jensen;1.1.1970;13.5.2025;13.5.2026;aktiv;nej
+5;Michael Phelps;30.6.1985;14.5.2025;14.5.2026;aktiv;ja
+6;Psyduck;22.3.2015;14.5.2025;14.5.2026;aktiv;nej
+7;Vaporion;16.5.2011;14.5.2025;14.5.2026;aktiv;ja
+8;Magikarp;14.5.2025;14.5.2025;14.5.2026;aktiv;nej
+10;Aquaman;6.2.1982;14.5.2025;14.5.2026;aktiv;ja
+11;Hydro-man;3.5.1922;14.5.2025;14.5.2026;aktiv;nej
+12;Kowalski;11.5.1995;14.5.2025;14.5.2026;aktiv;ja
+13;Jack Sparrow;10.2.1994;14.5.2025;14.5.2026;aktiv;nej

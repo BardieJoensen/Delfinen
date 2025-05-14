@@ -1,7 +1,4 @@
-import MemberAdministration.Member;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
@@ -25,11 +22,9 @@ public class UI {
                 4. Tilbage til hovedmenu""");
     }
 
-    public void printMoreRegistrationOption(){
-        System.out.println("""
-                
-                1. Registrer flere medlemmer
-                2. Tilbage til medlemsadministration""");
+    public void printOptionOrBack(String option){
+        System.out.println("1. "+option);
+        System.out.println("2. Tilbage");
     }
 
     public void printEditMember(){
@@ -41,20 +36,12 @@ public class UI {
                 4. Tilbage til medlemsadministration""");
     }
 
-    public void printPickMemberOption(){
-        System.out.println("""
-                
-                1. vælg medlem
-                2. tilbage til medlemsadministration""");
-    }
-
     public void printMemberOverviewMenu(){
         System.out.println("""
-                        
-                        1. Næste side
-                        2. Forrige side
-                        3. Vælg medlem
-                        4. Tilbage til medlemsadministration""");
+
+                1. Næste side
+                2. Vælg medlem
+                3. Tilbage til medlemsadministration""");
     }
 
     public void printEconomyMenu(){
@@ -62,17 +49,9 @@ public class UI {
                 
                 1. Se forventet indkomst
                 2. Registrer betaling
-                3. Se restance liste
+                3. Se restance-liste
                 4. Tilbage til hovedmenu""");
     }
-
-    public void printArrearsMenu(){
-        System.out.println("""
-                
-                1. Udmeld alle medlemmer i restance (3-4 måneder uden betaling)
-                2. Tilbage til økonomimenu""");
-    }
-
 
     //TO-DO konkurrencesvømningsmenu
     public void showMessage(String message) {
@@ -91,7 +70,6 @@ public class UI {
         System.out.print("Indtast valg: ");
 
         while(true) {
-
             //check if input is valid number
             try {
                 userInt = Integer.parseInt(scanner.nextLine());
@@ -116,7 +94,7 @@ public class UI {
         while(true){
             try{
                 String input = scanner.nextLine();
-                String[] parts = input.split("\\.");
+                String[] parts = input.split("[.-/]");
                 int day = Integer.parseInt(parts[0]);
                 int month = Integer.parseInt(parts[1]);
                 int year = Integer.parseInt(parts[2]);
