@@ -127,7 +127,7 @@ public class MemberList {
 
     //TO-DO: remove all members above arrears-threshold
 
-    public ArrayList<Member> getMembersInArrears(Member members){
+    public ArrayList<Member> getMembersInArrears(){
         ArrayList<Member> list = new ArrayList<>();
         for(Member m : memberList){
             if (!m.hasPaid()){

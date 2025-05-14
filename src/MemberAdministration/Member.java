@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Member implements Comparable<Member>{
-    private static final DateTimeFormatter DATE_STR_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
+    public static final DateTimeFormatter DATE_STR_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     private static int largestId = 0;
 
@@ -130,14 +130,14 @@ public class Member implements Comparable<Member>{
     public String toString(){
         return String.format("ID: %-6s Navn: %-20s Født: %10s   Indmeldt: %10s   Udløb: %10s   Konkurrencesvømmer: %-12s",
                 String.format("%04d", memberId),
-                checkName(name),
+                formatName(name),
                 birthday.format(DATE_STR_FORMATTER),
                 signUpDate.format(DATE_STR_FORMATTER),
                 membershipExpirationDate.format(DATE_STR_FORMATTER),
                 isCompetitive ? "ja" : "nej");
     }
 
-    private String checkName(String name){
+    public static String formatName(String name){
         while (name.length() > 20){
             String[] nameSplit = name.split(" ");
             if(nameSplit.length > 2){

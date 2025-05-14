@@ -9,10 +9,10 @@ public class SwimClubController {
     private final UI ui = new UI();
     private final MemberList memberList = new MemberList("./resources/MemberList.csv");
     private String input;
-    private String displayContext;
 
     public void run(){
         mainMenu();
+        memberList.saveMemberList();
     }
 
     public void mainMenu(){
@@ -23,18 +23,17 @@ public class SwimClubController {
             // TO DO KONKURRENCESVØMMERE
             switch (input){
                 case("1") -> {
-                    displayContext = "Administration";
                     memberAdministration();
                 }
                 case("2") -> {
-                    displayContext = "Economy";
                     economy();
                 }
                 case("3") -> {
-                    displayContext = "Competition";
                     ui.showMessage("404 not found");
                 }
-                case("4") ->{return;}
+                case("4") ->{
+                    return;
+                }
             }
         }
     }
@@ -93,7 +92,7 @@ public class SwimClubController {
 
             if((i+1)%10 == 0 || i == memberList.getMemberList().size()-1){
                 ui.printMemberOverviewMenu();
-                input = ui.getInputNumber(3);
+                input = ui.getInputNumber(4);
                 switch(input){
                     case("1") -> {continue;}
                     case("2") -> {
@@ -121,16 +120,19 @@ public class SwimClubController {
         switch (input){
             case("1") -> {
                 member.setCompetitive(!member.isCompetitive());
+                memberList.saveMemberList();
                 ui.showMessage("Konkurrencestatus for " + member.getName() + " er nu: " + member.isCompetitiveAsString());
                 editMember(member);
             }
             case("2") -> {
                 member.setActiveMember(!member.isActiveMember());
+                memberList.saveMemberList();
                 ui.showMessage("Aktivitetsstatus for " + member.getName() + " er nu: " + member.isActiveMemberAsString());
                 editMember(member);
             }
             case("3") -> {
                 memberList.removeMember(member.getMemberId());
+                memberList.saveMemberList();
                 ui.showMessage("Fjernet " + member.getName() + " fra listen");
             }
             case("4") -> {return;}
@@ -150,29 +152,43 @@ public class SwimClubController {
         }
     }
     public void totalIncome(){
-        StringBuilder message = new StringBuilder();
-        message.append("Den samlede forventede indkomst er: ");
-        message.append(memberList.calculateExpectedPayments());
-        message.append(" kr. per år.");
-        ui.showMessage(message.toString());
+        String message = "Den samlede forventede indkomst er: " +
+                memberList.calculateExpectedPayments() +
+                " kr. per år.";
+        ui.showMessage(message);
     }
     public void registerPayment(){
-        //search memberID? getMemberID?
-        //memberList.getMember(memberId);
+        ui.showMessage("\nVælg ID for det medlem du ønsker at registrere betaling for.");
+        input = ui.getInputNumber(memberList.getMemberList().size());
+        Member member = memberList.getMember(Integer.parseInt(input));
+        input = ui.getInputString(String.format("Bekræft registrering på medlemmet, ID: %04d Navn: %s [ja/nej]: ",
+                member.getMemberId(),
+                Member.formatName(member.getName()))).toLowerCase();
+        if(input.equals("ja")){
+            member.incrementMembershipExpirationDate();
+            ui.showMessage(String.format("Betaling er nu registreret på medlemmet %s til og med %s",
+                    Member.formatName(member.getName()),
+                    member.getMembershipExpirationDate().format(Member.DATE_STR_FORMATTER)));
+            memberList.saveMemberList();
+        }else{
+            ui.showMessage("Registrering annulleret");
+        }
     }
     public void arrearsList() {
+        ArrayList<Member> membersInArrears = memberList.getMembersInArrears();
+
         double totalArrears = 0.0;
-        int count = 0;
 
-        for (Member member : memberList.getMemberList())
-            if (!member.hasPaid()) {
-                double fee = MembershipFee.calculatePayment(member);
-                ui.showMessage(member.getName() + "ID: " + member.getMemberId() + ")");
-                ui.showMessage("Udstående betaling: " + fee + " DKK");
-                totalArrears += fee;
-                count++;
-
-            }
+        ui.showMessage("\nMedlemmer i restance:");
+        for(Member m : membersInArrears){
+            double fee = MembershipFee.calculatePayment(m);
+            ui.showMessage(String.format("ID: %-6s Navn: %-20s Udestående: %6s DKK",
+                    String.format("%04d", m.getMemberId()),
+                    Member.formatName(m.getName()),
+                    fee));
+            totalArrears += fee;
+        }
+        ui.showMessage(String.format("\nAntal medlemmer: %d \nSamlet udestående: %.2f DKK",membersInArrears.size(),totalArrears));
     }
 
 }

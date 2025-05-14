@@ -9,6 +9,7 @@ public class UI {
 
     public void printMainMenu(){
         System.out.println("""
+                
                 1. Medlemsadministration
                 2. Økonomi
                 3. Konkurrencesvømning
@@ -17,6 +18,7 @@ public class UI {
 
     public void printMemberAdministrationMenu(){
         System.out.println("""
+                
                 1. Registrer medlem
                 2. Søg efter medlem
                 3. Se medlemsliste
@@ -25,12 +27,14 @@ public class UI {
 
     public void printMoreRegistrationOption(){
         System.out.println("""
+                
                 1. Registrer flere medlemmer
                 2. Tilbage til medlemsadministration""");
     }
 
     public void printEditMember(){
         System.out.println("""
+                
                 1. Skift Konkurrencestatus
                 2. Skift aktivitetsstatus
                 3. Udmeld medlem
@@ -39,12 +43,14 @@ public class UI {
 
     public void printPickMemberOption(){
         System.out.println("""
+                
                 1. vælg medlem
                 2. tilbage til medlemsadministration""");
     }
 
     public void printMemberOverviewMenu(){
         System.out.println("""
+                        
                         1. Næste side
                         2. Forrige side
                         3. Vælg medlem
@@ -53,6 +59,7 @@ public class UI {
 
     public void printEconomyMenu(){
         System.out.println("""
+                
                 1. Se forventet indkomst
                 2. Registrer betaling
                 3. Se restance liste
@@ -61,6 +68,7 @@ public class UI {
 
     public void printArrearsMenu(){
         System.out.println("""
+                
                 1. Udmeld alle medlemmer i restance (3-4 måneder uden betaling)
                 2. Tilbage til økonomimenu""");
     }
@@ -72,7 +80,7 @@ public class UI {
     }
 
     public String getInputString(String prompt){
-        System.out.println(prompt);
+        System.out.print(prompt);
         return scanner.nextLine();
     }
 
@@ -80,7 +88,7 @@ public class UI {
 
         int userInt;
 
-        System.out.println("Indtast valg: ");
+        System.out.print("Indtast valg: ");
 
         while(true) {
 
@@ -103,7 +111,7 @@ public class UI {
     }
 
     public LocalDate getInputDate(String prompt){
-        System.out.println(prompt);
+        System.out.print(prompt);
         LocalDate date;
         while(true){
             try{
