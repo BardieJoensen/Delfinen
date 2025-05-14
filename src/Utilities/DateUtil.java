@@ -20,10 +20,6 @@ public class DateUtil {
         }
     }
 
-    public static String formatDate(LocalDate date) {
-        return date != null ? date.format(DATE_FORMATTER) : "";
-    }
-
     public static int calculateAge(LocalDate birthday) {
         LocalDate today = LocalDate.now();
         int age = today.getYear() - birthday.getYear();

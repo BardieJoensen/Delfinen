@@ -76,7 +76,7 @@ public class MemberList {
     }
 
     public ArrayList<Member> getMemberList() {
-        return  new ArrayList<Member>(memberList);
+        return  new ArrayList<>(memberList);
     }
 
     public Member getMember(int memberId){

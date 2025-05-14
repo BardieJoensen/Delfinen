@@ -7,7 +7,7 @@ public class Member implements Comparable<Member>{
 
     private final int memberId;
 
-    private String name;
+    private final String name;
     private final LocalDate birthday;
     private final LocalDate signUpDate;
     private LocalDate membershipExpirationDate;
