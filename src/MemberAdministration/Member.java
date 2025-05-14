@@ -125,9 +125,9 @@ public class Member implements Comparable<Member>{
         return String.format("ID: %-6s Navn: %-20s Født: %10s   Indmeldt: %10s   Udløb: %10s   Konkurrencesvømmer: %-12s",
                 String.format("%04d", memberId),
                 checkName(name),
-                birthday.format(DATE_STR_FORMATTER),
-                signUpDate.format(DATE_STR_FORMATTER),
-                membershipExpirationDate.format(DATE_STR_FORMATTER),
+                DateUtil.formatDate(birthday),
+                DateUtil.formatDate(signUpDate),
+                DateUtil.formatDate(membershipExpirationDate),
                 isCompetitive ? "ja" : "nej");
     }
 
