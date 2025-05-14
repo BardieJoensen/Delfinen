@@ -1,3 +1,5 @@
+import Utilities.DateUtil;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -23,7 +25,7 @@ public class UI {
     }
 
     public void printOptionOrBack(String option){
-        System.out.println("1. "+option);
+        System.out.println("\n1. "+option);
         System.out.println("2. Tilbage");
     }
 
@@ -94,14 +96,10 @@ public class UI {
         while(true){
             try{
                 String input = scanner.nextLine();
-                String[] parts = input.split("[.-/]");
-                int day = Integer.parseInt(parts[0]);
-                int month = Integer.parseInt(parts[1]);
-                int year = Integer.parseInt(parts[2]);
-                date = LocalDate.of(year,month,day);
+                date = DateUtil.parseDate(input);
                 break;
             } catch (Exception e) {
-                System.out.println("Fejl - ugyldig dato: indtast venligst gyldig dato i formatet [dd.mm.åååå]");
+                System.out.print("Fejl - ugyldig dato: indtast venligst gyldig dato i formatet [dd.mm.åååå]:");
             }
         }
 

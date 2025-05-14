@@ -9,10 +9,11 @@ public class DateUtil {
 
     public static LocalDate parseDate(String dateStr) throws DateTimeParseException {
         try {
-            String[] parts = dateStr.split("\\.");
+            String[] parts = dateStr.split("[./-]");
             int day = Integer.parseInt(parts[0]);
             int month = Integer.parseInt(parts[1]);
             int year = Integer.parseInt(parts[2]);
+            if(year<100) year += (year<LocalDate.now().getYear()-2000) ? 2000 : 1000;
             return LocalDate.of(year, month, day);
         } catch (Exception e) {
             throw new DateTimeParseException("Invalid date format: " + dateStr, dateStr, 0);
