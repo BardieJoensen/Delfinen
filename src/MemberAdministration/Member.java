@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Member implements Comparable<Member>{
-    private static final DateTimeFormatter DATE_STR_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
-
     private static int largestId = 0;
 
     private final int memberId;
