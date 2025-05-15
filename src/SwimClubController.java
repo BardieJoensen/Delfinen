@@ -107,10 +107,11 @@ public class SwimClubController {
     }
 
     public void editMember(Member member){
-        ui.showMessage("Redigerer: " + member.getMemberId() + " "
-                                         + member.getName() + " "
-                                         + member.isActiveMember() + " "
-                                         + member.isCompetitive());
+        ui.showMessage(String.format("\nValgt medlem: ID: %04d, Navn: %s, Aktivitetsstatus: %s, Konkurrencesvømmer: %s",
+                member.getMemberId(),
+                Member.formatName(member.getName()),
+                member.isActiveMemberAsString(),
+                member.isCompetitiveAsString()));
         ui.printEditMember();
         input = ui.getInputNumber(4);
         switch (input){
@@ -149,7 +150,7 @@ public class SwimClubController {
     }
 
     public void totalIncome(){
-        String message = String.format("Den samlede forventede indkomst er %.2f kr. per år.", memberList.calculateExpectedPayments());
+        String message = String.format("\nDen samlede forventede indkomst er %.2f kr. per år.", memberList.calculateExpectedPayments());
         ui.showMessage(message);
     }
 

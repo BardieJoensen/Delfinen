@@ -14,3 +14,5 @@ memberId;name;birthday;signUpDate;membershipExpirationDate;isActiveMember;isComp
 14;Nemo ClownFish;11.12.1094;14.5.2025;14.5.2026;aktiv;ja
 15;Ariel;4.5.2001;14.5.2025;14.5.2026;aktiv;ja
 16;Bobby Fisher;12.4.2005;14.5.2025;14.5.2026;aktiv;ja
+17;Lugia;9.11.1979;15.5.2025;15.5.2026;aktiv;ja
+18;Wartortle;8.6.1999;15.5.2025;15.5.2026;aktiv;nej
