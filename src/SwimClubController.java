@@ -2,8 +2,10 @@ import CompetitionAdministration.*;
 import MemberAdministration.Member;
 import MemberAdministration.MemberList;
 import Utilities.DateUtil;
+import Utilities.TimeUtil;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -20,15 +22,14 @@ public class SwimClubController {
     }
 
     public void mainMenu(){
-
-       while(true){
+        while(true){
             ui.printMainMenu();
             input = ui.getInputNumber(4);
             // TO DO KONKURRENCESVØMMERE
             switch (input){
                 case("1") -> memberAdministration();
                 case("2") -> economy();
-                case("3") -> topResults(false);
+                case("3") -> competitionAdministration();
                 case("4") ->{return;}
             }
         }
@@ -195,6 +196,118 @@ public class SwimClubController {
         ui.showMessage(String.format("\nAntal medlemmer: %d \nSamlet udestående: %.2f kr.",membersInArrears.size(),totalArrears));
     }
 
+    public void competitionAdministration(){
+        while(true){
+            ui.printCompetitionMenu();
+            input = ui.getInputNumber(4);
+            switch (input){
+                case "1" -> registerResult();
+                case "2" -> seeTeams();
+                case "3" -> seeTopResults();
+                case "4" -> {return;}
+            }
+        }
+    }
+
+    public void registerResult(){
+        ui.printResultRegistrationMenu();
+        input = ui.getInputNumber(3);
+        switch (input){
+            case "1" -> registerTrainingResult();
+            case "2" -> registerCompetitionResult();
+            case "3" -> {return;}
+        }
+    }
+
+    public void registerTrainingResult(){
+
+        int memberId = getCompMemberId();
+
+        ui.showMessage("Indtaster træningsresultat for " + memberList.getMember(memberId).getName());
+
+        LocalTime resultTime = ui.getInputTime("Indtast resultat: [mm:ss.SS]");
+
+        LocalDate date = ui.getInputDate("Indtast dato: [dd.mm.åååå]");
+
+        SwimDisciplin disciplin = ui.getInputDisciplin("Indtast disciplin: ");
+
+        Result trainingResult = new TrainingResult(memberId, resultTime, date, disciplin);
+
+        trainingResultList.addResult(trainingResult);
+    }
+
+    public void registerCompetitionResult(){
+
+        int memberId = getCompMemberId();
+
+        ui.showMessage("\nIndtaster konkurrenceresultat for " + memberList.getMember(memberId).getName());
+
+        LocalTime resultTime = ui.getInputTime("Indtast resultat: [mm:ss.SS]");
+
+        LocalDate date = ui.getInputDate("Indtast dato: [dd.mm.åååå]");
+
+        SwimDisciplin disciplin = ui.getInputDisciplin("Indtast disciplin: ");
+
+        String compName = ui.getInputString("Indtast navn på stævne: ");
+
+        ui.showMessage("Vælg svømmerens placering");
+        int placement = Integer.parseInt(ui.getInputNumber(999));
+
+        Result competitionResult = new CompetitionResult(memberId, resultTime, date, disciplin, compName, placement);
+
+        competitionResultList.addResult(competitionResult);
+    }
+
+    private int getCompMemberId(){
+        ui.showMessage("\nVælg ID for det medlem du ønsker at registrere resultatet for.");
+        int memberId;
+
+        while(true){
+            memberId = Integer.parseInt(ui.getInputNumber(Member.getLargestId()));
+            Member member = memberList.getMember(memberId);
+            if(member != null && member.isCompetitive()){
+                break;
+            }else if(member == null){
+                ui.showMessage("Medlem er ikke fundet - indtast venligst et gyldigt ID");
+            }else{
+                ui.showMessage(String.format("Medlemmet, %s, er ikke konkurrencesvømmer - indtast venligst et andet ID", Member.formatName(member.getName())));
+            }
+        }
+        return memberId;
+    }
+
+    public void seeTopResults(){
+        ui.printWhichTeam();
+        input = ui.getInputNumber(3);
+        switch (input) {
+            case "1" -> topResults(true);
+            case "2" -> topResults(false);
+            case "3" -> {return;}
+        }
+    }
+
+    public void seeTeams(){
+        ui.printWhichTeam();
+        input = ui.getInputNumber(3);
+        switch (input){
+            case "1" -> {
+                for (Member m : memberList.getMemberList()){
+                    if(m.isCompetitive() && m.isJunior()){
+                        ui.showMessage(m.toString());
+                    }
+                }
+            }
+            case "2" -> {
+                for (Member m : memberList.getMemberList()) {
+                    if (m.isCompetitive() && !m.isJunior()) {
+                        ui.showMessage(m.toString());
+                    }
+                }
+            }
+            case "3" -> {return;}
+        }
+    }
+
     public void topResults(boolean getJuniors){
         for(SwimDisciplin disciplin: SwimDisciplin.values()){
             ArrayList<Result> topResults = topResultsInDisciplin(disciplin, getJuniors);
@@ -208,8 +321,10 @@ public class SwimClubController {
 
     private ArrayList<Result> topResultsInDisciplin(SwimDisciplin disciplin, boolean getJuniors){
         ArrayList<Result> results = new ArrayList<>();
+        Member member;
         for(Result r : trainingResultList.getResults()){
-            if(r.getSwimDisciplin().equals(disciplin) && memberList.getMember(r.getMemberId()).isJunior() == getJuniors){
+            member = memberList.getMember(r.getMemberId());
+            if(r.getSwimDisciplin().equals(disciplin) && member.isJunior() == getJuniors && member.isCompetitive()){
                 Result topCompResult = competitionResultList.getTopResultOf(r.getMemberId());
 
                 if(topCompResult == null || topCompResult.getResultTime().isAfter(r.getResultTime())) {
