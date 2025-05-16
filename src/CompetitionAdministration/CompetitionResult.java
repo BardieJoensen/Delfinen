@@ -3,9 +3,9 @@ package CompetitionAdministration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class CompetitionResult extends TrainingResult {
-    private String compName;
-    private int placement;
+public class CompetitionResult extends Result {
+    private final String compName;
+    private final int placement;
 
     public CompetitionResult(int memberID, LocalTime resultTime, LocalDate date, SwimDisciplin swimDisciplin, String compName, int placement) {
         super(memberID, resultTime, date, swimDisciplin);

@@ -70,7 +70,7 @@ public class MemberList {
     public double calculateExpectedPayments(){
         double expectedPayment = 0.0;
         for(Member m : memberList){
-            expectedPayment += MembershipFee.calculatePayment(m );
+            expectedPayment += m.calculatePayment();
         }
         return expectedPayment;
     }

@@ -1,13 +1,19 @@
 package CompetitionAdministration;
 
-import java.util.ArrayList;
+import Utilities.DateUtil;
+import Utilities.TimeUtil;
 
-public class TrainingResultList implements ResultList{
-    private ArrayList<Result> results;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TrainingResultList extends ResultList{
 
     public TrainingResultList(String path){
-        this.results = new ArrayList<>();
-        loadResultsFromFile(path);
+        super(path);
     }
 
     @Override
@@ -16,26 +22,26 @@ public class TrainingResultList implements ResultList{
 
         boolean disciplinFound = false;
 
-        for(int i = 0; i<results.size(); i++){
-            Result oldResult = results.get(i);
+        for(int i = 0; i<getResults().size(); i++){
+            Result oldResult = getResults().get(i);
             if(oldResult.getSwimDisciplin().equals(result.getSwimDisciplin()) && oldResult.getMemberId() == id){
                 disciplinFound = true;
                 if(oldResult.getResultTime().isAfter(result.getResultTime())){
-                    results.set(i, result);
+                    getResults().set(i, result);
                     break;
                 }
             }
         }
 
         if(!disciplinFound){
-            results.add(result);
+            getResults().add(result);
         }
     }
 
     @Override
-    public ArrayList<Result> getMemberResults(int memberId) {
+    public ArrayList<Result> getResultsOf(int memberId) {
         ArrayList<Result> memberResults = new ArrayList<>();
-        for(Result r : results){
+        for(Result r : getResults()){
             if(r.getMemberId() == memberId){
                 memberResults.add(r);
             }
@@ -45,7 +51,28 @@ public class TrainingResultList implements ResultList{
 
     @Override
     public void loadResultsFromFile(String path) {
+        File csvFile = new File(path);
+        int counter = 1;
+        try (Scanner reader = new Scanner(csvFile)){
+            //skip header
+            reader.nextLine();
+            //load members
+            while(reader.hasNextLine()){
+                counter++;
+                String[] attributes = reader.nextLine().split(";");
+                int memberId = Integer.parseInt(attributes[0]);
+                LocalTime resultTime = TimeUtil.parseTime(attributes[1]);
+                LocalDate date = DateUtil.parseDate(attributes[2]);
+                SwimDisciplin swimDisciplin = SwimDisciplin.fromString(attributes[3]);
 
+                Result result = new TrainingResult(memberId,resultTime,date,swimDisciplin);
+                getResults().add(result);
+            }
+        }catch(FileNotFoundException e){
+            throw new RuntimeException("File not found: " + path, e);
+        }catch(Exception e){
+            throw new RuntimeException("Incompatible file: error at line " + counter + " in file: " + csvFile.getAbsolutePath());
+        }
     }
 
     @Override

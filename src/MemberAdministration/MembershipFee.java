@@ -1,26 +1,16 @@
 package MemberAdministration;
 
-public class MembershipFee {
+//consider this for an interface
 
-    private static final double DISCOUNT = 0.25;
-    private static final int DISCOUNT_AGE = 60;
-    private static final double JUNIOR_PRICE = 1000.00;
-    private static final int SENIOR_AGE_THRESHOLD = 18;
-    private static final double SENIOR_PRICE = 1600.00;
-    private static final double PASSIVE_PRICE = 500.00;
+public interface MembershipFee {
+
+    double DISCOUNT = 0.25;
+    int DISCOUNT_AGE = 60;
+    double JUNIOR_PRICE = 1000.00;
+    int SENIOR_AGE_THRESHOLD = 18;
+    double SENIOR_PRICE = 1600.00;
+    double PASSIVE_PRICE = 500.00;
 
 
-    public static double calculatePayment(Member member){
-        if(!member.isActiveMember()){
-            return PASSIVE_PRICE;
-        }
-        if(member.getAge() < SENIOR_AGE_THRESHOLD){
-            return JUNIOR_PRICE;
-        }
-        if (member.getAge() >= DISCOUNT_AGE){
-            return SENIOR_PRICE * (1-DISCOUNT);
-        }else{
-            return SENIOR_PRICE;
-        }
-    }
+    double calculatePayment();
 }

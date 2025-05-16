@@ -61,12 +61,12 @@ class MemberAdministrationTest {
         //test for 17-year-old (should get junior price)
         LocalDate birthdaySeventeenYearsOld = LocalDate.now().minusYears(17);
         Member member = new Member("Lilleper", birthdaySeventeenYearsOld, false);
-        assertEquals(EXPECTED_PRICE,MembershipFee.calculatePayment(member));
+        assertEquals(EXPECTED_PRICE,member.calculatePayment());
 
         //test for 18-year-old (should NOT get junior price)
         LocalDate birthdayEighteenYearsOld = LocalDate.now().minusYears(18);
         Member member2 = new Member("Storeper", birthdayEighteenYearsOld, false);
-        assertNotEquals(EXPECTED_PRICE, MembershipFee.calculatePayment(member2));
+        assertNotEquals(EXPECTED_PRICE, member2.calculatePayment());
     }
 
     @Test
@@ -77,22 +77,22 @@ class MemberAdministrationTest {
         //test for 18-year-old (should get senior price)
         LocalDate birthdayEighteenYearsOld = LocalDate.now().minusYears(18);
         Member member = new Member("Storeper", birthdayEighteenYearsOld, false);
-        assertEquals(EXPECTED_PRICE,MembershipFee.calculatePayment(member));
+        assertEquals(EXPECTED_PRICE,member.calculatePayment());
 
         //test for 59-year-old (should get senior price)
         LocalDate birthdayFiftyNineYearsOld = LocalDate.now().minusYears(59);
         Member member2 = new Member("Kæmpeper", birthdayFiftyNineYearsOld, false);
-        assertEquals(EXPECTED_PRICE,MembershipFee.calculatePayment(member2));
+        assertEquals(EXPECTED_PRICE,member2.calculatePayment());
 
         //test for 17-year-old (should NOT get senior price)
         LocalDate birthdaySeventeenYearsOld = LocalDate.now().minusYears(17);
         Member member3 = new Member("Lilleper", birthdaySeventeenYearsOld, false);
-        assertNotEquals(EXPECTED_PRICE, MembershipFee.calculatePayment(member3));
+        assertNotEquals(EXPECTED_PRICE, member3.calculatePayment());
 
         //test for 60-year-old (should NOT get senior price)
         LocalDate birthdaySixtyYearsOld = LocalDate.now().minusYears(60);
         Member member4 = new Member("Gamleper", birthdaySixtyYearsOld, false);
-        assertNotEquals(EXPECTED_PRICE, MembershipFee.calculatePayment(member4));
+        assertNotEquals(EXPECTED_PRICE, member4.calculatePayment());
     }
 
     @Test
@@ -103,12 +103,12 @@ class MemberAdministrationTest {
         //test for 60-year-old (should get discount)
         LocalDate birthdaySixtyYearsOld = LocalDate.now().minusYears(60);
         Member member = new Member("Gamleper", birthdaySixtyYearsOld, false);
-        assertEquals(EXPECTED_PRICE, MembershipFee.calculatePayment(member));
+        assertEquals(EXPECTED_PRICE, member.calculatePayment());
 
         //test for 59-year-old (should NOT get discount)
         LocalDate birthdayFiftyNineYearsOld = LocalDate.now().minusYears(59);
         Member member2 = new Member("Kæmpeper", birthdayFiftyNineYearsOld, false);
-        assertNotEquals(EXPECTED_PRICE,MembershipFee.calculatePayment(member2));
+        assertNotEquals(EXPECTED_PRICE,member2.calculatePayment());
     }
 
 }

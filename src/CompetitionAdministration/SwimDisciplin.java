@@ -16,4 +16,13 @@ public enum SwimDisciplin {
     public String getName() {
         return name;
     }
+
+    public static SwimDisciplin fromString(String disciplin){
+        for(SwimDisciplin s : values()){
+            if(s.getName().equalsIgnoreCase(disciplin)){
+                return s;
+            }
+        }
+        throw new IllegalArgumentException("Invalid swim disciplin: " + disciplin);
+    }
 }

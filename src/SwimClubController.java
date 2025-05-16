@@ -1,14 +1,17 @@
+import CompetitionAdministration.*;
 import MemberAdministration.Member;
 import MemberAdministration.MemberList;
-import MemberAdministration.MembershipFee;
 import Utilities.DateUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class SwimClubController {
     private final UI ui = new UI();
     private final MemberList memberList = new MemberList("./resources/MemberList.csv");
+    private final TrainingResultList trainingResultList = new TrainingResultList("./resources/TrainingResultList.csv");
+    private final CompetitionResultList competitionResultList = new CompetitionResultList("./resources/CompetitionResultList.csv");
     private String input;
 
     public void run(){
@@ -25,7 +28,7 @@ public class SwimClubController {
             switch (input){
                 case("1") -> memberAdministration();
                 case("2") -> economy();
-                case("3") -> ui.showMessage("404 not found");
+                case("3") -> topResults(false);
                 case("4") ->{return;}
             }
         }
@@ -47,7 +50,7 @@ public class SwimClubController {
     public void registerMember(){
         String name = ui.getInputString("Indtast navn på medlem: ");
         LocalDate birthday = ui.getInputDate("Indtast fødselsdato: ");
-        boolean competitive = ui.getInputString("Konkurrencesvømmer [ja/nej]: ").equals("ja");
+        boolean competitive = ui.getInputString("Konkurrencesvømmer [ja/nej]: ").equalsIgnoreCase("ja");
         Member member = new Member(name, birthday, competitive);
         memberList.addMember(member);
         memberList.saveMemberList();
@@ -94,6 +97,9 @@ public class SwimClubController {
                         ui.showMessage("\nMedlemsoplysninger:");
                         continue;
                     }
+                    //                    case ("2") -> {
+                    //                        if (i >= 19) i -= (i != memberList.getMemberList().size() - 1) ? 20 : ((i + 1) % 10 + 10);
+                    //                    }
                     case("2") -> pickMember();
                     case("3") -> {return;}
                 }
@@ -179,7 +185,7 @@ public class SwimClubController {
 
         ui.showMessage("\nMedlemmer i restance:");
         for(Member m : membersInArrears){
-            double fee = MembershipFee.calculatePayment(m);
+            double fee = m.calculatePayment();
             ui.showMessage(String.format("ID: %-6s Navn: %-20s Udestående: %6s kr.",
                     String.format("%04d", m.getMemberId()),
                     Member.formatName(m.getName()),
@@ -187,6 +193,36 @@ public class SwimClubController {
             totalArrears += fee;
         }
         ui.showMessage(String.format("\nAntal medlemmer: %d \nSamlet udestående: %.2f kr.",membersInArrears.size(),totalArrears));
+    }
+
+    public void topResults(boolean getJuniors){
+        for(SwimDisciplin disciplin: SwimDisciplin.values()){
+            ArrayList<Result> topResults = topResultsInDisciplin(disciplin, getJuniors);
+            if(!topResults.isEmpty()) ui.showMessage("\nTop 5 resultater i: " +disciplin.getName() + ":");
+            topResults.forEach(
+                r -> ui.showMessage(String.format("Navn: %-20s %s",
+                Member.formatName(memberList.getMember(r.getMemberId()).getName()), r))
+            );
+        }
+    }
+
+    private ArrayList<Result> topResultsInDisciplin(SwimDisciplin disciplin, boolean getJuniors){
+        ArrayList<Result> results = new ArrayList<>();
+        for(Result r : trainingResultList.getResults()){
+            if(r.getSwimDisciplin().equals(disciplin) && memberList.getMember(r.getMemberId()).isJunior() == getJuniors){
+                Result topCompResult = competitionResultList.getTopResultOf(r.getMemberId());
+
+                if(topCompResult == null || topCompResult.getResultTime().isAfter(r.getResultTime())) {
+                    results.add(r);
+
+                }else{
+                    results.add(topCompResult);
+                }
+            }
+        }
+
+        results.sort(Comparator.comparing(Result::getResultTime));
+        return (results.size() > 5 ) ? (ArrayList<Result>) results.subList(0,5) : results;
     }
 
 }

@@ -42,7 +42,7 @@ public class UI {
         System.out.println("""
 
                 1. Næste side
-                2. Vælg medlem
+                2. Vælg medlem (ID)
                 3. Tilbage til medlemsadministration""");
     }
 

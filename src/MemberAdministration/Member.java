@@ -2,7 +2,7 @@ package MemberAdministration;
 import Utilities.DateUtil;
 import java.time.LocalDate;
 
-public class Member implements Comparable<Member>{
+public class Member implements Comparable<Member>, MembershipFee{
     private static int largestId = 0;
 
     private final int memberId;
@@ -13,6 +13,7 @@ public class Member implements Comparable<Member>{
     private LocalDate membershipExpirationDate;
     private boolean isActiveMember;
     private boolean isCompetitive;
+
     //constructor for creating a new member from UI
 
     public Member(String name, LocalDate birthday, boolean isCompetitive) {
@@ -88,6 +89,10 @@ public class Member implements Comparable<Member>{
         return DateUtil.calculateAge(birthday);
     }
 
+    public boolean isJunior(){
+        return getAge() < SENIOR_AGE_THRESHOLD;
+    }
+
     public void incrementMembershipExpirationDate() {
         membershipExpirationDate = membershipExpirationDate.plusYears(1);
     }
@@ -142,7 +147,22 @@ public class Member implements Comparable<Member>{
     }
 
     @Override
-    public int compareTo(Member o) {
-        return Integer.compare(this.memberId,o.memberId);
+    public int compareTo(Member that) {
+        return Integer.compare(this.memberId,that.memberId);
+    }
+
+    @Override
+    public double calculatePayment(){
+        if(!isActiveMember()){
+            return PASSIVE_PRICE;
+        }
+        if(getAge() < SENIOR_AGE_THRESHOLD){
+            return JUNIOR_PRICE;
+        }
+        if (getAge() >= DISCOUNT_AGE){
+            return SENIOR_PRICE * (1-DISCOUNT);
+        }else{
+            return SENIOR_PRICE;
+        }
     }
 }
