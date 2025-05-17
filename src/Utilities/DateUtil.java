@@ -13,7 +13,13 @@ public class DateUtil {
             int day = Integer.parseInt(parts[0]);
             int month = Integer.parseInt(parts[1]);
             int year = Integer.parseInt(parts[2]);
-            if(year<100) year += (year<LocalDate.now().getYear()-2000) ? 2000 : 1900;
+            //handle 2-digit years
+            if(year<100){
+                int currentYear = LocalDate.now().getYear();
+                int currentCentury = currentYear/100;
+                year = year + currentCentury*100;
+                if(year > currentYear) year -= 100;
+            }
             return LocalDate.of(year, month, day);
         } catch (Exception e) {
             throw new DateTimeParseException("Invalid date format: " + dateStr, dateStr, 0);
