@@ -16,5 +16,4 @@ memberId;name;birthday;signUpDate;membershipExpirationDate;isActiveMember;isComp
 16;Bobby Fisher;12.4.2005;14.5.2025;14.5.2026;aktiv;ja
 17;Lugia;9.11.1979;15.5.2025;15.5.2026;aktiv;ja
 18;Wartortle;8.6.1999;15.5.2025;15.5.2026;aktiv;nej
-20;Test Medlem;12.12.1995;16.5.2025;16.5.2026;aktiv;nej
-21;Test medlem;5.12.1965;16.5.2025;16.5.2026;aktiv;ja
+22;Duck Dodgers;5.6.2002;17.5.2025;17.5.2026;aktiv;nej

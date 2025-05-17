@@ -6,7 +6,6 @@ public class Member implements Comparable<Member>, MembershipFee{
     private static int largestId = 0;
 
     private final int memberId;
-
     private final String name;
     private final LocalDate birthday;
     private final LocalDate signUpDate;
@@ -14,19 +13,19 @@ public class Member implements Comparable<Member>, MembershipFee{
     private boolean isActiveMember;
     private boolean isCompetitive;
 
+
     //constructor for creating a new member from UI
-
     public Member(String name, LocalDate birthday, boolean isCompetitive) {
-        this.memberId = createMemberID();
-        this.name = name;
-        this.birthday = birthday;
-        this.signUpDate = LocalDate.now();
-        this.membershipExpirationDate = this.signUpDate.plusYears(1);
-        this.isActiveMember = true;
-        this.isCompetitive = isCompetitive;
+        this(createMemberID(),
+                name,
+                birthday,
+                LocalDate.now(),
+                LocalDate.now().plusYears(1),
+                true,
+                isCompetitive);
     }
-    //Constructor for creating a new member with existing data from CSV file
 
+    //Constructor for creating a new member with existing data from CSV file
     public Member(int memberId, String name, LocalDate birthday,
                   LocalDate signUpDate, LocalDate membershipExpirationDate,
                   boolean isActiveMember, boolean isCompetitive) {
@@ -105,7 +104,7 @@ public class Member implements Comparable<Member>, MembershipFee{
         this.isCompetitive = competitive;
     }
 
-    public int createMemberID(){
+    private static int createMemberID(){
         largestId++;
         return largestId;
     }
