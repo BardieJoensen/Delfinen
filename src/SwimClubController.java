@@ -109,8 +109,15 @@ public class SwimClubController {
     }
 
     public void pickMember(){
-        input = ui.getInputNumber(Member.getLargestId());
-        editMember(memberList.getMember(Integer.parseInt(input)));
+        while (true) {
+            input = ui.getInputNumber(Member.getLargestId());
+            if (memberList.getMember(Integer.parseInt(input)) == null) {
+                ui.showMessage("Ugyldigt medlems-ID. Indtast venligst et gyldigt ID");
+                continue;
+            }
+            editMember(memberList.getMember(Integer.parseInt(input)));
+            break;
+        }
     }
 
     public void editMember(Member member){
