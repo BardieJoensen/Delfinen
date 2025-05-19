@@ -20,10 +20,22 @@ public abstract class ResultList {
         return results;
     }
 
+    public Result get(int index){
+        return results.get(index);
+    }
+
+    public int size(){
+        return results.size();
+    }
+
     public abstract void addResult(Result result);
+
     public abstract ArrayList<Result> getResultsOf(int memberId);
+
     public abstract void loadResultsFromFile();
+
     public abstract void saveResults();
+
     public void removeResultsOf(int memberId) {
         ArrayList<Result> toRemove = getResultsOf(memberId);
         for(Result r : toRemove){

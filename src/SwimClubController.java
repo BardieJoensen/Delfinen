@@ -15,39 +15,43 @@ public class SwimClubController {
     private final CompetitionResultList competitionResultList = new CompetitionResultList("./resources/CompetitionResultList.csv");
     private String input;
 
-    public void run(){
+    public void run() {
         mainMenu();
         memberList.saveMemberList();
     }
 
-    public void mainMenu(){
-        while(true){
+    public void mainMenu() {
+        while (true) {
             ui.printMainMenu();
             input = ui.getInputNumber(4);
 
-            switch (input){
-                case("1") -> memberAdministration();
-                case("2") -> economy();
-                case("3") -> competitionAdministration();
-                case("4") ->{return;}
+            switch (input) {
+                case ("1") -> memberAdministration();
+                case ("2") -> economy();
+                case ("3") -> competitionAdministration();
+                case ("4") -> {
+                    return;
+                }
             }
         }
     }
 
-    public void memberAdministration(){
-        while(true){
+    public void memberAdministration() {
+        while (true) {
             ui.printMemberAdministrationMenu();
             input = ui.getInputNumber(4);
-            switch (input){
-                case("1") -> registerMember();
-                case("2") -> searchForMember();
-                case("3") -> seeMembers();
-                case("4") -> {return;}
+            switch (input) {
+                case ("1") -> registerMember();
+                case ("2") -> searchForMember();
+                case ("3") -> seeMembers();
+                case ("4") -> {
+                    return;
+                }
             }
         }
     }
 
-    public void registerMember(){
+    public void registerMember() {
         String name = ui.getInputString("Indtast navn på medlem: ");
         LocalDate birthday = ui.getInputDate("Indtast fødselsdato: ");
         boolean competitive = ui.getInputString("Konkurrencesvømmer [ja/nej]: ").equalsIgnoreCase("ja");
@@ -57,68 +61,72 @@ public class SwimClubController {
 
         ui.printOptionOrBack("Registrer flere medlemmer");
         input = ui.getInputNumber(2);
-        switch (input){
-            case("1") -> registerMember();
-            case("2") -> {return;}
+        switch (input) {
+            case ("1") -> registerMember();
+            case ("2") -> {
+                return;
+            }
         }
     }
 
-    public void searchForMember(){
+    public void searchForMember() {
         String search = ui.getInputString("Indtast søgning:");
         ArrayList<Member> searchResults = memberList.searchForMember(search);
 
         ui.showMessage("\nSøgeresultat:");
         searchResults.forEach(m -> ui.showMessage(m.toString()));
 
-        if(searchResults.size() == 1){
+        if (searchResults.size() == 1) {
             editMember(searchResults.get(0));
-        }else{
+        } else {
             ui.printOptionOrBack("Vælg medlem");
             input = ui.getInputNumber(2);
-            if( input.equals("1")){
+            if (input.equals("1")) {
                 pickMember();
-            }else{
+            } else {
                 return;
             }
         }
     }
 
-    public void seeMembers(){
+    public void seeMembers() {
         ui.showMessage("\nMedlemsoplysninger:");
-        for(int i = 0; i < memberList.getMemberList().size(); i++){
-            ui.showMessage(memberList.getMemberList().get(i).toString());
+        for (int i = 0; i < memberList.size(); i++) {
+            ui.showMessage(memberList.get(i).toString());
 
-            if((i+1)%10 == 0 || i == memberList.getMemberList().size()-1){
-                ui.showMessage("[side " + ((i)/10+1) + "/" + ((memberList.getMemberList().size()-1)/10+1) +"]");
+            if ((i + 1) % 10 == 0 || i == memberList.size() - 1) {
+                ui.showMessage("[side " + ((i) / 10 + 1) + "/" + ((memberList.size() - 1) / 10 + 1) + "]");
                 ui.printMemberOverviewMenu();
                 input = ui.getInputNumber(4);
-                switch(input){
-                    case("1") -> {
-                        if(i == memberList.getMemberList().size()-1) i = -1;
+                switch (input) {
+                    case ("1") -> {
+                        if (i == memberList.size() - 1) i = -1;
                     }
                     case ("2") -> {
-                        if (i >= 19){
-                            i -= (i != memberList.getMemberList().size() - 1) ? 20 : ((i + 1) % 10 + 10);
-                        }else{
-                            i = (memberList.getMemberList().size() - 1) - ((memberList.getMemberList().size()) % 10);
+                        if (i >= 19) {
+                            i -= (i != memberList.size() - 1) ? 20 : ((i + 1) % 10 + 10);
+                        } else {
+                            i = (memberList.size() - 1) - ((memberList.size()) % 10);
                         }
                     }
-                    case("3") ->{
-                        if (i >= 19){
-                            i -= (i != memberList.getMemberList().size() - 1) ? 20 : ((i + 1) % 10 + 10);
-                        }else{
+                    case ("3") -> {
+                        if (i >= 19) {
+                            i -= (i != memberList.size() - 1) ? 20 : ((i + 1) % 10 + 10);
+                        } else {
                             i = -1;
                         }
                         pickMember();
                     }
-                    case("4") -> {return;}
+                    case ("4") -> {
+                        return;
+                    }
                 }
                 ui.showMessage("\nMedlemsoplysninger:");
             }
         }
     }
 
-    public void pickMember(){
+    public void pickMember() {
         while (true) {
             input = ui.getInputNumber(Member.getLargestId());
             if (memberList.getMember(Integer.parseInt(input)) == null) {
@@ -130,7 +138,7 @@ public class SwimClubController {
         }
     }
 
-    public void editMember(Member member){
+    public void editMember(Member member) {
         ui.showMessage(String.format("\nValgt medlem: ID: %04d, Navn: %s, Aktivitetsstatus: %s, Konkurrencesvømmer: %s",
                 member.getMemberId(),
                 Member.formatName(member.getName()),
@@ -138,24 +146,24 @@ public class SwimClubController {
                 member.isCompetitiveAsString()));
         ui.printEditMember();
         input = ui.getInputNumber(4);
-        switch (input){
-            case("1") -> {
+        switch (input) {
+            case ("1") -> {
                 member.setCompetitive(!member.isCompetitive());
                 memberList.saveMemberList();
                 ui.showMessage("Konkurrencestatus for " + member.getName() + " er nu: " + member.isCompetitiveAsString());
                 editMember(member);
             }
-            case("2") -> {
+            case ("2") -> {
                 member.setActiveMember(!member.isActiveMember());
                 memberList.saveMemberList();
                 ui.showMessage("Aktivitetsstatus for " + member.getName() + " er nu: " + member.isActiveMemberAsString());
                 editMember(member);
             }
-            case("3") -> {
+            case ("3") -> {
                 input = ui.getInputString(String.format("Bekræft udmelding af medlemmet, ID: %04d Navn: %s [ja/nej]: ",
                         member.getMemberId(),
                         Member.formatName(member.getName()))).toLowerCase();
-                if(input.equalsIgnoreCase("ja")) {
+                if (input.equalsIgnoreCase("ja")) {
                     memberList.removeMember(member.getMemberId());
                     memberList.saveMemberList();
                     competitionResultList.removeResultsOf(member.getMemberId());
@@ -163,46 +171,50 @@ public class SwimClubController {
                     trainingResultList.removeResultsOf(member.getMemberId());
                     trainingResultList.saveResults();
                     ui.showMessage("Fjernet " + member.getName() + " fra listen");
-                }else{
+                } else {
                     editMember(member);
                 }
             }
-            case("4") -> {return;}
-        }
-    }
-
-    public void economy(){
-        while(true){
-            ui.printEconomyMenu();
-            input = ui.getInputNumber(4);
-            switch (input){
-                case("1") -> totalIncome();
-                case("2") -> registerPayment();
-                case("3") -> arrearsList();
-                case("4") -> {return;}
+            case ("4") -> {
+                return;
             }
         }
     }
 
-    public void totalIncome(){
+    public void economy() {
+        while (true) {
+            ui.printEconomyMenu();
+            input = ui.getInputNumber(4);
+            switch (input) {
+                case ("1") -> totalIncome();
+                case ("2") -> registerPayment();
+                case ("3") -> arrearsList();
+                case ("4") -> {
+                    return;
+                }
+            }
+        }
+    }
+
+    public void totalIncome() {
         String message = String.format("\nDen samlede forventede indkomst er %.2f kr. per år.", memberList.calculateExpectedPayments());
         ui.showMessage(message);
     }
 
-    public void registerPayment(){
+    public void registerPayment() {
         ui.showMessage("\nVælg ID for det medlem du ønsker at registrere betaling for.");
-        input = ui.getInputNumber(memberList.getMemberList().size());
+        input = ui.getInputNumber(memberList.size());
         Member member = memberList.getMember(Integer.parseInt(input));
         input = ui.getInputString(String.format("Bekræft registrering på medlemmet, ID: %04d Navn: %s [ja/nej]: ",
                 member.getMemberId(),
-                Member.formatName(member.getName()))).toLowerCase();
-        if(input.equals("ja")){
+                Member.formatName(member.getName())));
+        if (input.equalsIgnoreCase("ja")) {
             member.incrementMembershipExpirationDate();
             ui.showMessage(String.format("Betaling er nu registreret på medlemmet %s til og med %s",
                     Member.formatName(member.getName()),
                     member.getMembershipExpirationDate().format(DateUtil.DATE_FORMATTER)));
-                    memberList.saveMemberList();
-        }else{
+            memberList.saveMemberList();
+        } else {
             ui.showMessage("Registrering annulleret");
         }
     }
@@ -213,7 +225,7 @@ public class SwimClubController {
         double totalArrears = 0.0;
 
         ui.showMessage("\nMedlemmer i restance:");
-        for(Member m : membersInArrears){
+        for (Member m : membersInArrears) {
             double fee = m.calculatePayment();
             ui.showMessage(String.format("ID: %-6s Navn: %-20s Udestående: %6s kr.",
                     String.format("%04d", m.getMemberId()),
@@ -221,33 +233,37 @@ public class SwimClubController {
                     fee));
             totalArrears += fee;
         }
-        ui.showMessage(String.format("\nAntal medlemmer: %d \nSamlet udestående: %.2f kr.",membersInArrears.size(),totalArrears));
+        ui.showMessage(String.format("\nAntal medlemmer: %d \nSamlet udestående: %.2f kr.", membersInArrears.size(), totalArrears));
     }
 
-    public void competitionAdministration(){
-        while(true){
+    public void competitionAdministration() {
+        while (true) {
             ui.printCompetitionMenu();
             input = ui.getInputNumber(4);
-            switch (input){
+            switch (input) {
                 case "1" -> registerResult();
                 case "2" -> seeTeams();
                 case "3" -> seeTopResults();
-                case "4" -> {return;}
+                case "4" -> {
+                    return;
+                }
             }
         }
     }
 
-    public void registerResult(){
+    public void registerResult() {
         ui.printResultRegistrationMenu();
         input = ui.getInputNumber(3);
-        switch (input){
+        switch (input) {
             case "1" -> registerTrainingResult();
             case "2" -> registerCompetitionResult();
-            case "3" -> {return;}
+            case "3" -> {
+                return;
+            }
         }
     }
 
-    public void registerTrainingResult(){
+    public void registerTrainingResult() {
 
         int memberId = getCompMemberId();
 
@@ -264,7 +280,7 @@ public class SwimClubController {
         trainingResultList.addResult(trainingResult);
     }
 
-    public void registerCompetitionResult(){
+    public void registerCompetitionResult() {
 
         int memberId = getCompMemberId();
 
@@ -286,41 +302,31 @@ public class SwimClubController {
         competitionResultList.addResult(competitionResult);
     }
 
-    private int getCompMemberId(){
+    private int getCompMemberId() {
         ui.showMessage("\nVælg ID for det medlem du ønsker at registrere resultatet for.");
         int memberId;
 
-        while(true){
+        while (true) {
             memberId = Integer.parseInt(ui.getInputNumber(Member.getLargestId()));
             Member member = memberList.getMember(memberId);
-            if(member != null && member.isCompetitive()){
+            if (member != null && member.isCompetitive()) {
                 break;
-            }else if(member == null){
+            } else if (member == null) {
                 ui.showMessage("Medlem er ikke fundet - indtast venligst et gyldigt ID");
-            }else{
+            } else {
                 ui.showMessage(String.format("Medlemmet, %s, er ikke konkurrencesvømmer - indtast venligst et andet ID", Member.formatName(member.getName())));
             }
         }
         return memberId;
     }
 
-    public void seeTopResults(){
+    public void seeTeams() {
         ui.printWhichTeam();
         input = ui.getInputNumber(3);
         switch (input) {
-            case "1" -> topResults(true);
-            case "2" -> topResults(false);
-            case "3" -> {return;}
-        }
-    }
-
-    public void seeTeams(){
-        ui.printWhichTeam();
-        input = ui.getInputNumber(3);
-        switch (input){
             case "1" -> {
-                for (Member m : memberList.getMemberList()){
-                    if(m.isCompetitive() && m.isJunior()){
+                for (Member m : memberList.getMemberList()) {
+                    if (m.isCompetitive() && m.isJunior()) {
                         ui.showMessage(m.toString());
                     }
                 }
@@ -332,45 +338,60 @@ public class SwimClubController {
                     }
                 }
             }
-            case "3" -> {return;}
+            case "3" -> {
+                return;
+            }
         }
     }
 
-    public void topResults(boolean getJuniors){
-        for(SwimDisciplin disciplin: SwimDisciplin.values()){
+    public void seeTopResults() {
+        ui.printWhichTeam();
+        input = ui.getInputNumber(3);
+        switch (input) {
+            case "1" -> topResults(true);
+            case "2" -> topResults(false);
+            case "3" -> {
+                return;
+            }
+        }
+    }
+
+    public void topResults(boolean getJuniors) {
+        for (SwimDisciplin disciplin : SwimDisciplin.values()) {
             ArrayList<Result> topResults = topResultsInDisciplin(disciplin, getJuniors);
-            if(!topResults.isEmpty()) ui.showMessage("\nTop 5 resultater i: " +disciplin.getName() + ":");
+
+            if (!topResults.isEmpty()) ui.showMessage("\nTop 5 resultater i: " + disciplin.getName() + ":");
+
             topResults.forEach(
-                r -> ui.showMessage(String.format("Navn: %-20s %s",
-                Member.formatName(memberList.getMember(r.getMemberId()).getName()), r))
+                    r -> ui.showMessage(String.format("Navn: %-20s %s",
+                            Member.formatName(memberList.getMember(r.getMemberId()).getName()), r))
             );
         }
     }
 
-    private ArrayList<Result> topResultsInDisciplin(SwimDisciplin disciplin, boolean getJuniors){
+    private ArrayList<Result> topResultsInDisciplin(SwimDisciplin disciplin, boolean getJuniors) {
         ArrayList<Result> results = new ArrayList<>();
         Member member;
-        for(Result r : trainingResultList.getResults()){
+        for (Result r : trainingResultList.getResults()) {
             member = memberList.getMember(r.getMemberId());
 
-            if (member == null){
+            if (member == null) {
                 continue;
             }
 
-            if(r.getSwimDisciplin().equals(disciplin) && member.isJunior() == getJuniors && member.isCompetitive()){
+            if (r.getSwimDisciplin().equals(disciplin) && member.isJunior() == getJuniors && member.isCompetitive()) {
                 Result topCompResult = competitionResultList.getTopResultOf(r.getMemberId());
 
-                if(topCompResult == null || topCompResult.isSlower(r)) {
+                if (topCompResult == null || topCompResult.isSlower(r)) {
                     results.add(r);
-
-                }else{
+                } else {
                     results.add(topCompResult);
                 }
             }
         }
 
         results.sort(Comparator.comparing(Result::getResultTime));
-        return (results.size() > 5 ) ? (ArrayList<Result>) results.subList(0,5) : results;
+        return (results.size() > 5) ? (ArrayList<Result>) results.subList(0, 5) : results;
     }
 
 }

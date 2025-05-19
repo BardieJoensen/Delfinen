@@ -56,6 +56,14 @@ public class MemberList {
         }
     }
 
+    public Member get(int index){
+        return memberList.get(index);
+    }
+
+    public int size(){
+        return memberList.size();
+    }
+
     public double calculateExpectedPayments(){
         double expectedPayment = 0.0;
         for(Member m : memberList){
