@@ -1,7 +1,5 @@
 package MemberAdministration;
 
-//consider this for an interface
-
 public interface MembershipFee {
 
     double DISCOUNT = 0.25;

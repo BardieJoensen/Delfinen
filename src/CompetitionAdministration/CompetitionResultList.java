@@ -1,13 +1,8 @@
 package CompetitionAdministration;
 
-import Utilities.DateUtil;
-import Utilities.TimeUtil;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.InputMismatchException;

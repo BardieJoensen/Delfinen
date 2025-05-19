@@ -53,6 +53,6 @@ public class CompetitionResult extends Result {
 
     @Override
     public String toString(){
-        return String.format("%s Stævne: %-20s placering: %2s. plads", super.toString(), compName, placement);
+        return String.format("%s Placering: %-12s Stævne: %-20s ", super.toString(), String.format("%3d. plads", placement), compName);
     }
 }

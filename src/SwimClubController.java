@@ -2,7 +2,6 @@ import CompetitionAdministration.*;
 import MemberAdministration.Member;
 import MemberAdministration.MemberList;
 import Utilities.DateUtil;
-import Utilities.TimeUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,7 +24,7 @@ public class SwimClubController {
         while(true){
             ui.printMainMenu();
             input = ui.getInputNumber(4);
-            // TO DO KONKURRENCESVØMMERE
+
             switch (input){
                 case("1") -> memberAdministration();
                 case("2") -> economy();
@@ -92,18 +91,29 @@ public class SwimClubController {
             if((i+1)%10 == 0 || i == memberList.getMemberList().size()-1){
                 ui.showMessage("[side " + ((i)/10+1) + "/" + ((memberList.getMemberList().size()-1)/10+1) +"]");
                 ui.printMemberOverviewMenu();
-                input = ui.getInputNumber(3);
+                input = ui.getInputNumber(4);
                 switch(input){
                     case("1") -> {
-                        ui.showMessage("\nMedlemsoplysninger:");
-                        continue;
+                        if(i == memberList.getMemberList().size()-1) i = -1;
                     }
-                    //                    case ("2") -> {
-                    //                        if (i >= 19) i -= (i != memberList.getMemberList().size() - 1) ? 20 : ((i + 1) % 10 + 10);
-                    //                    }
-                    case("2") -> pickMember();
-                    case("3") -> {return;}
+                    case ("2") -> {
+                        if (i >= 19){
+                            i -= (i != memberList.getMemberList().size() - 1) ? 20 : ((i + 1) % 10 + 10);
+                        }else{
+                            i = (memberList.getMemberList().size() - 1) - ((memberList.getMemberList().size()) % 10);
+                        }
+                    }
+                    case("3") ->{
+                        if (i >= 19){
+                            i -= (i != memberList.getMemberList().size() - 1) ? 20 : ((i + 1) % 10 + 10);
+                        }else{
+                            i = -1;
+                        }
+                        pickMember();
+                    }
+                    case("4") -> {return;}
                 }
+                ui.showMessage("\nMedlemsoplysninger:");
             }
         }
     }

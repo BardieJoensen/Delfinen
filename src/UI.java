@@ -1,6 +1,4 @@
 import CompetitionAdministration.SwimDisciplin;
-import MemberAdministration.Member;
-import MemberAdministration.MemberList;
 import Utilities.DateUtil;
 import Utilities.TimeUtil;
 
@@ -40,15 +38,16 @@ public class UI {
                 1. Skift Konkurrencestatus
                 2. Skift aktivitetsstatus
                 3. Udmeld medlem
-                4. Tilbage til medlemsadministration""");
+                4. Tilbage til medlemslisten""");
     }
 
     public void printMemberOverviewMenu(){
         System.out.println("""
 
                 1. Næste side
-                2. Vælg medlem (ID)
-                3. Tilbage til medlemsadministration""");
+                2. Forrige side
+                3. Vælg medlem (ID)
+                4. Tilbage til medlemsadministration""");
     }
 
     public void printEconomyMenu(){
@@ -85,7 +84,6 @@ public class UI {
                 3. Tilbage til konkurrencesvømning""");
     }
 
-    //TO-DO konkurrencesvømningsmenu
     public void showMessage(String message) {
         System.out.println(message);
     }

@@ -21,15 +21,4 @@ public class TrainingResult extends Result{
 
         return new TrainingResult(memberId,resultTime,date,swimDisciplin);
     }
-
-    @Override
-    public String[] toStringArray() {
-        String[] arr = new String[4];
-        arr[0] = String.valueOf(this.getMemberId());
-        arr[1] = this.getResultTime() != null ? this.getResultTime().format(TimeUtil.TIME_FORMATTER) : " ";
-        arr[2] = this.getDate() != null ? this.getDate().format(DateUtil.DATE_FORMATTER) : " ";
-        arr[3] = this.getSwimDisciplin() != null ? this.getSwimDisciplin().getName() : " ";
-
-        return arr;
-    }
 }
