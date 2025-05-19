@@ -142,9 +142,20 @@ public class SwimClubController {
                 editMember(member);
             }
             case("3") -> {
-                memberList.removeMember(member.getMemberId());
-                memberList.saveMemberList();
-                ui.showMessage("Fjernet " + member.getName() + " fra listen");
+                input = ui.getInputString(String.format("Bekræft udmelding af medlemmet, ID: %04d Navn: %s [ja/nej]: ",
+                        member.getMemberId(),
+                        Member.formatName(member.getName()))).toLowerCase();
+                if(input.equalsIgnoreCase("ja")) {
+                    memberList.removeMember(member.getMemberId());
+                    memberList.saveMemberList();
+                    competitionResultList.removeResultsOf(member.getMemberId());
+                    competitionResultList.saveResults();
+                    trainingResultList.removeResultsOf(member.getMemberId());
+                    trainingResultList.saveResults();
+                    ui.showMessage("Fjernet " + member.getName() + " fra listen");
+                }else{
+                    editMember(member);
+                }
             }
             case("4") -> {return;}
         }
@@ -331,6 +342,11 @@ public class SwimClubController {
         Member member;
         for(Result r : trainingResultList.getResults()){
             member = memberList.getMember(r.getMemberId());
+
+            if (member == null){
+                continue;
+            }
+
             if(r.getSwimDisciplin().equals(disciplin) && member.isJunior() == getJuniors && member.isCompetitive()){
                 Result topCompResult = competitionResultList.getTopResultOf(r.getMemberId());
 

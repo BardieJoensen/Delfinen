@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 public abstract class ResultList {
     private final ArrayList<Result> results;
+    private final String path;
 
     public ResultList(String path){
         this.results = new ArrayList<>();
-        loadResultsFromFile(path);
+        this.path = path;
+        loadResultsFromFile();
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public ArrayList<Result> getResults() {
@@ -16,6 +22,12 @@ public abstract class ResultList {
 
     public abstract void addResult(Result result);
     public abstract ArrayList<Result> getResultsOf(int memberId);
-    public abstract void loadResultsFromFile(String path);
+    public abstract void loadResultsFromFile();
     public abstract void saveResults();
+    public void removeResultsOf(int memberId) {
+        ArrayList<Result> toRemove = getResultsOf(memberId);
+        for(Result r : toRemove){
+            results.remove(r);
+        }
+    }
 }

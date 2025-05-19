@@ -30,18 +30,10 @@ public class MemberList {
             //load members
             while(reader.hasNextLine()){
                 counter++;
-                String[] attributes = reader.nextLine().split(";");
-                int memberId = Integer.parseInt(attributes[0]);
-                String name = attributes[1];
-                LocalDate birthday = DateUtil.parseDate(attributes[2]);
-                LocalDate signUpDate = DateUtil.parseDate(attributes[3]);
-                LocalDate membershipExpirationDate = DateUtil.parseDate(attributes[4]);
-                boolean isActiveMember = (attributes[5].equalsIgnoreCase("aktiv"));
-                boolean isCompetitive = (attributes[6].equalsIgnoreCase("ja"));
-
-                Member member = new Member(memberId,name,birthday,signUpDate,membershipExpirationDate,isActiveMember,isCompetitive);
+                Member member = Member.fromString(reader.nextLine());
                 memberList.add(member);
             }
+            Member.setLargestId(memberList.get(memberList.size()-1).getMemberId());
         }catch(FileNotFoundException e){
             throw new RuntimeException("File not found: " + path, e);
         }catch(Exception e){

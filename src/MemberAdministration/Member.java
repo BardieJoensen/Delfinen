@@ -36,7 +36,6 @@ public class Member implements Comparable<Member>, MembershipFee{
         this.membershipExpirationDate = membershipExpirationDate;
         this.isActiveMember = isActiveMember;
         this.isCompetitive = isCompetitive;
-        largestId = Math.max(memberId, largestId);
     }
     // GETTERS OG SETTERS
 
@@ -104,9 +103,26 @@ public class Member implements Comparable<Member>, MembershipFee{
         this.isCompetitive = competitive;
     }
 
+    public static void setLargestId(int newLargestId){
+        largestId = newLargestId;
+    }
+
     private static int createMemberID(){
         largestId++;
         return largestId;
+    }
+
+    public static Member fromString(String string){
+        String[] attributes = string.split(";");
+        int memberId = Integer.parseInt(attributes[0]);
+        String name = attributes[1];
+        LocalDate birthday = DateUtil.parseDate(attributes[2]);
+        LocalDate signUpDate = DateUtil.parseDate(attributes[3]);
+        LocalDate membershipExpirationDate = DateUtil.parseDate(attributes[4]);
+        boolean isActiveMember = (attributes[5].equalsIgnoreCase("aktiv"));
+        boolean isCompetitive = (attributes[6].equalsIgnoreCase("ja"));
+
+        return new Member(memberId,name,birthday,signUpDate,membershipExpirationDate,isActiveMember,isCompetitive);
     }
 
     public String[] toStringArray(){

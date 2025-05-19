@@ -9,7 +9,6 @@ memberId;name;birthday;signUpDate;membershipExpirationDate;isActiveMember;isComp
 8;Magikarp;14.5.2025;14.5.2025;14.5.2026;aktiv;nej
 10;Aquaman;6.2.1982;14.5.2025;14.5.2026;aktiv;ja
 11;Hydro-man;3.5.1922;14.5.2025;14.5.2026;aktiv;nej
-12;Kowalski;11.5.1995;14.5.2025;14.5.2026;aktiv;ja
 13;Jack Sparrow;10.2.1994;14.5.2025;14.5.2026;aktiv;nej
 14;Nemo ClownFish;11.12.1094;14.5.2025;14.5.2026;aktiv;ja
 15;Ariel;4.5.2001;14.5.2025;14.5.2026;aktiv;ja
@@ -17,3 +16,7 @@ memberId;name;birthday;signUpDate;membershipExpirationDate;isActiveMember;isComp
 17;Lugia;9.11.1979;15.5.2025;15.5.2026;aktiv;ja
 18;Wartortle;8.6.1999;15.5.2025;15.5.2026;aktiv;nej
 22;Duck Dodgers;5.6.2002;17.5.2025;17.5.2026;aktiv;nej
+23;Pølsekongen;11.10.1997;19.5.2025;19.5.2026;aktiv;nej
+25;Jesper;11.1.2017;19.5.2025;19.5.2026;aktiv;nej
+26;Olding;1.1.0111;19.5.2025;19.5.2026;aktiv;nej
+27;Test Jørgen;11.11.1997;19.5.2025;19.5.2026;aktiv;ja
