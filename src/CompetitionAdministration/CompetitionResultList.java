@@ -16,9 +16,9 @@ public class CompetitionResultList extends ResultList {
 
     @Override
     public void addResult(Result result) {
-        if(result instanceof CompetitionResult) {
+        if (result instanceof CompetitionResult) {
             getResults().add(result);
-        }else {
+        } else {
             throw new InputMismatchException("Fejl: forventede konkurrenceresultat - fik andet");
         }
     }
@@ -26,8 +26,8 @@ public class CompetitionResultList extends ResultList {
     @Override
     public ArrayList<Result> getResultsOf(int memberId) {
         ArrayList<Result> memberResults = new ArrayList<>();
-        for(Result r : getResults()){
-            if(r.getMemberId() == memberId){
+        for (Result r : getResults()) {
+            if (r.getMemberId() == memberId) {
                 memberResults.add(r);
             }
         }
@@ -48,14 +48,14 @@ public class CompetitionResultList extends ResultList {
             //skip header
             reader.nextLine();
             //load members
-            while(reader.hasNextLine()) {
+            while (reader.hasNextLine()) {
                 counter++;
                 Result result = CompetitionResult.fromString(reader.nextLine()); //new CompetitionResult(memberId,resultTime,date,swimDisciplin,compName,placement);
                 getResults().add(result);
             }
-        }catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException("File not found: " + this.getPath(), e);
-        }catch(Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("Incompatible file: error at line " + counter + " in file: " + csvFile.getAbsolutePath());
         }
 
@@ -63,14 +63,14 @@ public class CompetitionResultList extends ResultList {
 
     @Override
     public void saveResults() {
-        try(PrintWriter pw = new PrintWriter(this.getPath())) {
+        try (PrintWriter pw = new PrintWriter(this.getPath())) {
             pw.println("memberId;resultTime;date;swimDisciplin;compName;placement");
-            for (Result r : getResults()){
+            for (Result r : getResults()) {
                 String[] attributes = r.toStringArray();
                 String line = String.join(";", attributes);
                 pw.println(line);
             }
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             throw new RuntimeException("File not found: " + getPath(), e);
         }
 

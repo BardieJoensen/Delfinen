@@ -1,8 +1,10 @@
 package MemberAdministration;
+
 import Utilities.DateUtil;
+
 import java.time.LocalDate;
 
-public class Member implements Comparable<Member>, MembershipFee{
+public class Member implements Comparable<Member>, MembershipFee {
     private static int largestId = 0;
 
     private final int memberId;
@@ -42,6 +44,7 @@ public class Member implements Comparable<Member>, MembershipFee{
     public static int getLargestId() {
         return largestId;
     }
+
     public int getMemberId() {
         return this.memberId;
     }
@@ -66,7 +69,7 @@ public class Member implements Comparable<Member>, MembershipFee{
         return this.isActiveMember;
     }
 
-    public String isActiveMemberAsString(){
+    public String isActiveMemberAsString() {
         return (isActiveMember) ? "aktiv" : "inaktiv";
     }
 
@@ -74,7 +77,7 @@ public class Member implements Comparable<Member>, MembershipFee{
         return this.isCompetitive;
     }
 
-    public String isCompetitiveAsString(){
+    public String isCompetitiveAsString() {
         return (isCompetitive) ? "ja" : "nej";
     }
 
@@ -87,7 +90,7 @@ public class Member implements Comparable<Member>, MembershipFee{
         return DateUtil.calculateAge(birthday);
     }
 
-    public boolean isJunior(){
+    public boolean isJunior() {
         return getAge() < SENIOR_AGE_THRESHOLD;
     }
 
@@ -103,16 +106,16 @@ public class Member implements Comparable<Member>, MembershipFee{
         this.isCompetitive = competitive;
     }
 
-    public static void setLargestId(int newLargestId){
+    public static void setLargestId(int newLargestId) {
         largestId = newLargestId;
     }
 
-    private static int createMemberID(){
+    private static int createMemberID() {
         largestId++;
         return largestId;
     }
 
-    public static Member fromString(String string){
+    public static Member fromString(String string) {
         String[] attributes = string.split(";");
         int memberId = Integer.parseInt(attributes[0]);
         String name = attributes[1];
@@ -122,10 +125,10 @@ public class Member implements Comparable<Member>, MembershipFee{
         boolean isActiveMember = (attributes[5].equalsIgnoreCase("aktiv"));
         boolean isCompetitive = (attributes[6].equalsIgnoreCase("ja"));
 
-        return new Member(memberId,name,birthday,signUpDate,membershipExpirationDate,isActiveMember,isCompetitive);
+        return new Member(memberId, name, birthday, signUpDate, membershipExpirationDate, isActiveMember, isCompetitive);
     }
 
-    public String[] toStringArray(){
+    public String[] toStringArray() {
         String[] attributes = new String[7];
         attributes[0] = String.valueOf(memberId);
         attributes[1] = name != null ? name : "";
@@ -138,7 +141,7 @@ public class Member implements Comparable<Member>, MembershipFee{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("ID: %-6s Navn: %-20s Født: %10s   Indmeldt: %10s   Udløber: %10s   Konkurrencesvømmer: %-12s",
                 String.format("%04d", memberId),
                 formatName(name),
@@ -148,14 +151,14 @@ public class Member implements Comparable<Member>, MembershipFee{
                 isCompetitive ? "ja" : "nej");
     }
 
-    public static String formatName(String name){
-        while (name.length() > 20){
+    public static String formatName(String name) {
+        while (name.length() > 20) {
             String[] nameSplit = name.split(" ");
-            if(nameSplit.length > 2){
-                name = nameSplit[0] + " " + nameSplit[nameSplit.length-1];
-            }else{
-                if (nameSplit.length > 1) name = nameSplit[0].charAt(0)+". " + nameSplit[nameSplit.length-1];
-                if (name.length() > 20) name = name.substring(0,20);
+            if (nameSplit.length > 2) {
+                name = nameSplit[0] + " " + nameSplit[nameSplit.length - 1];
+            } else {
+                if (nameSplit.length > 1) name = nameSplit[0].charAt(0) + ". " + nameSplit[nameSplit.length - 1];
+                if (name.length() > 20) name = name.substring(0, 20);
             }
         }
         return name;
@@ -163,20 +166,20 @@ public class Member implements Comparable<Member>, MembershipFee{
 
     @Override
     public int compareTo(Member that) {
-        return Integer.compare(this.memberId,that.memberId);
+        return Integer.compare(this.memberId, that.memberId);
     }
 
     @Override
-    public double calculatePayment(){
-        if(!isActiveMember()){
+    public double calculatePayment() {
+        if (!isActiveMember()) {
             return PASSIVE_PRICE;
         }
-        if(getAge() < SENIOR_AGE_THRESHOLD){
+        if (getAge() < SENIOR_AGE_THRESHOLD) {
             return JUNIOR_PRICE;
         }
-        if (getAge() >= DISCOUNT_AGE){
-            return SENIOR_PRICE * (1-DISCOUNT);
-        }else{
+        if (getAge() >= DISCOUNT_AGE) {
+            return SENIOR_PRICE * (1 - DISCOUNT);
+        } else {
             return SENIOR_PRICE;
         }
     }

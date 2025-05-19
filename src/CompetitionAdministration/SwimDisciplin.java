@@ -17,9 +17,9 @@ public enum SwimDisciplin {
         return name;
     }
 
-    public static SwimDisciplin fromString(String disciplin){
-        for(SwimDisciplin s : values()){
-            if(s.getName().equalsIgnoreCase(disciplin)){
+    public static SwimDisciplin fromString(String disciplin) {
+        for (SwimDisciplin s : values()) {
+            if (s.getName().equalsIgnoreCase(disciplin)) {
                 return s;
             }
         }

@@ -24,7 +24,7 @@ public class CompetitionResult extends Result {
         return placement;
     }
 
-    public static Result fromString(String string){
+    public static Result fromString(String string) {
         String[] attributes = string.split(";");
         int memberId = Integer.parseInt(attributes[0]);
         LocalTime resultTime = TimeUtil.parseTime(attributes[1]);
@@ -33,7 +33,7 @@ public class CompetitionResult extends Result {
         String compName = attributes[4];
         int placement = Integer.parseInt(attributes[5]);
 
-        return new CompetitionResult(memberId,resultTime,date,swimDisciplin,compName,placement);
+        return new CompetitionResult(memberId, resultTime, date, swimDisciplin, compName, placement);
     }
 
     @Override
@@ -45,14 +45,14 @@ public class CompetitionResult extends Result {
             arr[i] = superArr[i];
         }
 
-        arr[arr.length-2] = this.getCompName();
-        arr[arr.length-1] = String.valueOf(this.getPlacement());
+        arr[arr.length - 2] = this.getCompName();
+        arr[arr.length - 1] = String.valueOf(this.getPlacement());
 
         return arr;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%s Placering: %-12s Stævne: %-20s ", super.toString(), String.format("%3d. plads", placement), compName);
     }
 }

@@ -18,25 +18,25 @@ public abstract class Result {
         this.date = date;
         this.swimDisciplin = swimDisciplin;
     }
-    
+
     public LocalTime getResultTime() {
         return resultTime;
     }
-    
+
     public SwimDisciplin getSwimDisciplin() {
         return swimDisciplin;
     }
 
-    public int getMemberId(){
+    public int getMemberId() {
         return memberId;
     }
 
-    public LocalDate getDate(){
+    public LocalDate getDate() {
         return date;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("ID: %-6s Tid: %10s   Dato: %10s   Disciplin: %-10s",
                 String.format("%04d", memberId),
                 resultTime.format(TimeUtil.TIME_FORMATTER),
@@ -54,7 +54,7 @@ public abstract class Result {
         return arr;
     }
 
-    public boolean isSlower(Result compared){
+    public boolean isSlower(Result compared) {
         return this.resultTime.isAfter(compared.resultTime);
     }
 }

@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class UI {
     private final Scanner scanner = new Scanner(System.in);
 
-    public void printMainMenu(){
+    public void printMainMenu() {
         System.out.println("""
                 
                 1. Medlemsadministration
@@ -18,7 +18,7 @@ public class UI {
                 4. Afslut""");
     }
 
-    public void printMemberAdministrationMenu(){
+    public void printMemberAdministrationMenu() {
         System.out.println("""
                 
                 1. Registrer medlem
@@ -27,12 +27,12 @@ public class UI {
                 4. Tilbage til hovedmenu""");
     }
 
-    public void printOptionOrBack(String option){
-        System.out.println("\n1. "+option);
+    public void printOptionOrBack(String option) {
+        System.out.println("\n1. " + option);
         System.out.println("2. Tilbage");
     }
 
-    public void printEditMember(){
+    public void printEditMember() {
         System.out.println("""
                 
                 1. Skift Konkurrencestatus
@@ -41,16 +41,16 @@ public class UI {
                 4. Tilbage til medlemslisten""");
     }
 
-    public void printMemberOverviewMenu(){
+    public void printMemberOverviewMenu() {
         System.out.println("""
-
+                
                 1. Næste side
                 2. Forrige side
                 3. Vælg medlem (ID)
                 4. Tilbage til medlemsadministration""");
     }
 
-    public void printEconomyMenu(){
+    public void printEconomyMenu() {
         System.out.println("""
                 
                 1. Se forventet indkomst
@@ -58,8 +58,8 @@ public class UI {
                 3. Se restance-liste
                 4. Tilbage til hovedmenu""");
     }
-    
-    public void printCompetitionMenu(){
+
+    public void printCompetitionMenu() {
         System.out.println("""
                 
                 1. Registrer resultat
@@ -68,7 +68,7 @@ public class UI {
                 4. Tilbage til hovedmenu""");
     }
 
-    public void printResultRegistrationMenu(){
+    public void printResultRegistrationMenu() {
         System.out.println("""
                 
                 1. Registrer træningsresultat
@@ -76,7 +76,7 @@ public class UI {
                 3. Tilbage til konkurrencesvømning""");
     }
 
-    public void printWhichTeam(){
+    public void printWhichTeam() {
         System.out.println("""
                 
                 1. Se juniorhold
@@ -88,7 +88,7 @@ public class UI {
         System.out.println(message);
     }
 
-    public String getInputString(String prompt){
+    public String getInputString(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
     }
@@ -99,7 +99,7 @@ public class UI {
 
         System.out.print("Indtast valg: ");
 
-        while(true) {
+        while (true) {
             //check if input is valid number
             try {
                 userInt = Integer.parseInt(scanner.nextLine());
@@ -118,11 +118,11 @@ public class UI {
         return String.valueOf(userInt);
     }
 
-    public LocalDate getInputDate(String prompt){
+    public LocalDate getInputDate(String prompt) {
         System.out.print(prompt);
         LocalDate date;
-        while(true){
-            try{
+        while (true) {
+            try {
                 String input = scanner.nextLine();
                 date = DateUtil.parseDate(input);
                 break;
@@ -134,11 +134,11 @@ public class UI {
         return date;
     }
 
-    public LocalTime getInputTime(String prompt){
+    public LocalTime getInputTime(String prompt) {
         System.out.print(prompt);
         LocalTime time;
-        while(true){
-            try{
+        while (true) {
+            try {
                 String input = scanner.nextLine();
                 time = TimeUtil.parseTime(input);
                 break;
@@ -150,18 +150,18 @@ public class UI {
         return time;
     }
 
-    public SwimDisciplin getInputDisciplin(String prompt){
+    public SwimDisciplin getInputDisciplin(String prompt) {
         System.out.print(prompt);
         SwimDisciplin disciplin;
-        while(true){
-            try{
+        while (true) {
+            try {
                 String input = scanner.nextLine();
                 disciplin = SwimDisciplin.fromString(input);
                 break;
             } catch (Exception e) {
                 StringBuilder message = new StringBuilder("Fejl - ugyldig disciplin, indtast venligst gyldig disciplin: ");
                 String[] disciplines = new String[SwimDisciplin.values().length];
-                for(int i = 0; i<disciplines.length; i++){
+                for (int i = 0; i < disciplines.length; i++) {
                     disciplines[i] = SwimDisciplin.values()[i].getName();
                 }
                 message.append("[").append(String.join("/", disciplines)).append("]");

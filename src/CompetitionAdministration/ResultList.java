@@ -6,7 +6,7 @@ public abstract class ResultList {
     private final ArrayList<Result> results;
     private final String path;
 
-    public ResultList(String path){
+    public ResultList(String path) {
         this.results = new ArrayList<>();
         this.path = path;
         loadResultsFromFile();
@@ -20,11 +20,11 @@ public abstract class ResultList {
         return results;
     }
 
-    public Result get(int index){
+    public Result get(int index) {
         return results.get(index);
     }
 
-    public int size(){
+    public int size() {
         return results.size();
     }
 
@@ -38,10 +38,10 @@ public abstract class ResultList {
 
     public void removeResultsOf(int memberId) {
         ArrayList<Result> toRemove = getResultsOf(memberId);
-        for(Result r : toRemove){
+        for (Result r : toRemove) {
             results.remove(r);
         }
     }
 
-    
+
 }
