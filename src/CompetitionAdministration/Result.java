@@ -53,4 +53,8 @@ public abstract class Result {
 
         return arr;
     }
+
+    public boolean isSlower(Result compared){
+        return this.resultTime.isAfter(compared.resultTime);
+    }
 }

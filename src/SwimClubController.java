@@ -360,7 +360,7 @@ public class SwimClubController {
             if(r.getSwimDisciplin().equals(disciplin) && member.isJunior() == getJuniors && member.isCompetitive()){
                 Result topCompResult = competitionResultList.getTopResultOf(r.getMemberId());
 
-                if(topCompResult == null || topCompResult.getResultTime().isAfter(r.getResultTime())) {
+                if(topCompResult == null || topCompResult.isSlower(r)) {
                     results.add(r);
 
                 }else{
