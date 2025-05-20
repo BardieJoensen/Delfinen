@@ -244,7 +244,8 @@ public class SwimClubController {
                 case "1" -> registerResult();
                 case "2" -> seeTeams();
                 case "3" -> seeTopResults();
-                case "4" -> {
+                case "4" -> seeMemberDisciplins();
+                case "5" -> {
                     return;
                 }
             }
@@ -303,7 +304,7 @@ public class SwimClubController {
     }
 
     private int getCompMemberId() {
-        ui.showMessage("\nVælg ID for det medlem du ønsker at registrere resultatet for.");
+        ui.showMessage("\nVælg ID for medlemmet.");
         int memberId;
 
         while (true) {
@@ -392,6 +393,27 @@ public class SwimClubController {
 
         results.sort(Comparator.comparing(Result::getResultTime));
         return (results.size() > 5) ? (ArrayList<Result>) results.subList(0, 5) : results;
+    }
+
+    public void seeMemberDisciplins(){
+        int memberId = getCompMemberId();
+        Member member = memberList.getMember(memberId);
+
+        ArrayList<SwimDisciplin> disciplins = trainingResultList.getMemberDisciplines(memberId);
+        for(SwimDisciplin d : competitionResultList.getMemberDisciplines(memberId)){
+            if(!disciplins.contains(d)){
+                disciplins.add(d);
+            }
+        }
+
+        if(disciplins.isEmpty()){
+            ui.showMessage(String.format("Medlemmet, %s, er ikke aktiv i nogen discipliner endnu",member.getName()));
+        }else{
+            ui.showMessage(String.format("Medlemmet, %s, er aktiv i følgende discipliner:",member.getName()));
+            for(SwimDisciplin d : disciplins){
+                ui.showMessage(d.getName());
+            }
+        }
     }
 
 }

@@ -65,7 +65,8 @@ public class UI {
                 1. Registrer resultat
                 2. Se holdliste
                 3. Se topresultater
-                4. Tilbage til hovedmenu""");
+                4. Se et medlems aktive discipliner
+                5. Tilbage til hovedmenu""");
     }
 
     public void printResultRegistrationMenu() {

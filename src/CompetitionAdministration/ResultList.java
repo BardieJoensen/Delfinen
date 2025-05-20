@@ -43,5 +43,18 @@ public abstract class ResultList {
         }
     }
 
+    public ArrayList<SwimDisciplin> getMemberDisciplines(int memberId){
+        ArrayList<SwimDisciplin> disciplins = new ArrayList<>();
+
+        SwimDisciplin disciplin;
+        for(Result r : getResultsOf(memberId)){
+            disciplin = r.getSwimDisciplin();
+            if(!disciplins.contains(disciplin)){
+                disciplins.add(disciplin);
+            }
+        }
+
+        return disciplins;
+    }
 
 }
