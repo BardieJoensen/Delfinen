@@ -239,7 +239,7 @@ public class SwimClubController {
     public void competitionAdministration() {
         while (true) {
             ui.printCompetitionMenu();
-            input = ui.getInputNumber(4);
+            input = ui.getInputNumber(5);
             switch (input) {
                 case "1" -> registerResult();
                 case "2" -> seeTeams();
