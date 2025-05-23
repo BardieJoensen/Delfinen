@@ -154,11 +154,15 @@ public class Member implements Comparable<Member>, MembershipFee {
     public static String formatName(String name) {
         while (name.length() > 20) {
             String[] nameSplit = name.split(" ");
-            if (nameSplit.length > 2) {
-                name = nameSplit[0] + " " + nameSplit[nameSplit.length - 1];
-            } else {
-                if (nameSplit.length > 1) name = nameSplit[0].charAt(0) + ". " + nameSplit[nameSplit.length - 1];
+
+            int names = nameSplit.length;
+            if (names > 2) {
+                name = nameSplit[0] + " " + nameSplit[names - 1];
+            } else if(names == 2){
+                name = nameSplit[0].charAt(0) + ". " + nameSplit[names - 1];
                 if (name.length() > 20) name = name.substring(0, 20);
+            } else {
+                name = name.substring(0, 20);
             }
         }
         return name;
